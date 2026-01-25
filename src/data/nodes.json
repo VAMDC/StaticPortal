@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ivo://vamdc/vald/uu/django",
+    "name": "VALD",
+    "description": "Vienna Atomic Line Database - comprehensive atomic line data",
+    "url": "http://vald.astro.uu.se/atoms-12.07/tap/"
+  },
+  {
+    "id": "ivo://vamdc/cdms/vamdc-tap-dev",
+    "name": "CDMS",
+    "description": "Cologne Database for Molecular Spectroscopy",
+    "url": "http://cdms.ph1.uni-koeln.de/cdms/tap/"
+  },
+  {
+    "id": "ivo://vamdc/jpl/vamdc-tap-dev",
+    "name": "JPL",
+    "description": "JPL Molecular Spectroscopy Catalog",
+    "url": "http://cdms.ph1.uni-koeln.de/jpl/tap/"
+  },
+  {
+    "id": "ivo://vamdc/hitran",
+    "name": "HITRAN-UCL",
+    "description": "High-resolution transmission molecular absorption database",
+    "url": "http://vamdc.mssl.ucl.ac.uk/node/hitran/tap/"
+  },
+  {
+    "id": "ivo://vamdc/chianti/django",
+    "name": "Chianti",
+    "description": "CHIANTI atomic database for astrophysical spectroscopy",
+    "url": "http://ag02.ast.cam.ac.uk/chianti-dev/tap/"
+  },
+  {
+    "id": "ivo://vamdc/basecol/vamdc-tap-dev",
+    "name": "BASECOL",
+    "description": "Collisional ro-vibrational excitation of molecules",
+    "url": "http://dev.vamdc.org/basecol/tapservice_12_07/TAP/"
+  },
+  {
+    "id": "ivo://vamdc/KIDA/vamdc-tap-12.07",
+    "name": "KIDA",
+    "description": "Kinetic Database for Astrochemistry",
+    "url": "http://dev.vamdc.org/kida/tapservice_12_07/TAP/"
+  },
+  {
+    "id": "ivo://vamdc/TOPbase/tap-xsams-12.07",
+    "name": "TOPbase",
+    "description": "Opacity Project atomic database",
+    "url": "http://topbase.obspm.fr/12.07/vamdc/tap/"
+  },
+  {
+    "id": "ivo://vamdc/TIPbase/tap-xsams-12.07",
+    "name": "TIPbase",
+    "description": "Iron Project atomic database",
+    "url": "http://tipbase.obspm.fr/12.07/vamdc/tap/"
+  },
+  {
+    "id": "ivo://vamdc/stark-b/tap-xsams-12.07",
+    "name": "Stark-B",
+    "description": "Stark broadening parameters",
+    "url": "http://stark-b.obspm.fr/12.07/vamdc/tap/"
+  },
+  {
+    "id": "ivo://vamdc/UDFA",
+    "name": "UMIST",
+    "description": "UMIST Database for Astrochemistry",
+    "url": "http://star.pst.qub.ac.uk/sne/umist3/tap/"
+  },
+  {
+    "id": "ivo://vamdc/dijon-methane-lines",
+    "name": "MeCaSDa",
+    "description": "Methane Calculated Spectroscopic Database",
+    "url": "http://vamdc.icb.cnrs.fr/mecasda-12.07/tap/"
+  },
+  {
+    "id": "ivo://vamdc/reims-ethylene",
+    "name": "ECaSDa",
+    "description": "Ethene Calculated Spectroscopic Database",
+    "url": "http://vamdc.univ-reims.fr/ecasda-12.07/tap/"
+  },
+  {
+    "id": "ivo://vamdc/smpo-sample",
+    "name": "S&MPO",
+    "description": "Spectroscopy and Molecular Properties of Ozone",
+    "url": "http://vamdc.univ-reims.fr/smpo12/tap/"
+  },
+  {
+    "id": "ivo://vamdc/ghosst",
+    "name": "GhoSST",
+    "description": "Grenoble Astrophysics and Planetology Solid Spectroscopy Thermodynamics",
+    "url": "http://ghosst.osug.fr/vamdc/tap/"
+  },
+  {
+    "id": "ivo://vamdc/OACatania/LASP1207",
+    "name": "LASP",
+    "description": "Laboratory Astrophysics Spectroscopy",
+    "url": "http://dblasp.oact.inaf.it/node1207/OACT/tap/"
+  },
+  {
+    "id": "ivo://vamdc/cdsd-296-xsams1",
+    "name": "CDSD-296K",
+    "description": "Carbon Dioxide Spectroscopic Databank (296K)",
+    "url": "http://lts.iao.ru/node/cdsd-296-xsams1/tap/"
+  },
+  {
+    "id": "ivo://vamdc/cdsd-1000-xsams1",
+    "name": "CDSD-1000K",
+    "description": "Carbon Dioxide Spectroscopic Databank (1000K)",
+    "url": "http://lts.iao.ru/node/cdsd-1000-xsams1/tap/"
+  },
+  {
+    "id": "ivo://vamdc/cdsd-4000-xsams1",
+    "name": "CDSD-4000K",
+    "description": "Carbon Dioxide Spectroscopic Databank (4000K)",
+    "url": "http://lts.iao.ru/node/cdsd-4000-xsams1/tap/"
+  },
+  {
+    "id": "ivo://vamdc/RADAM",
+    "name": "RADAM",
+    "description": "Radiation Damage archive",
+    "url": "http://193.55.130.154/tap/"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "vamdc-static-portal",
+  "version": "0.1.0",
+  "description": "A VAMDC portal that runs entirely in the browser",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/test-utils": "^2.4.4",
+    "happy-dom": "^13.6.2",
+    "vite": "^5.1.6",
+    "vitest": "^1.3.1"
+  },
+  "license": "GPL-3.0"
+}
