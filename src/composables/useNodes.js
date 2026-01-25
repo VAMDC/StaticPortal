@@ -19,6 +19,9 @@ function parseVamdcHeaders(headers) {
   }
 }
 
+// Default timeout for node requests (10 seconds)
+const REQUEST_TIMEOUT = 10000
+
 /**
  * Check data availability at a single node via HEAD request
  *
@@ -30,13 +33,23 @@ function parseVamdcHeaders(headers) {
 async function checkNode(node, query, signal) {
   const url = buildQueryURL(node, query)
 
+  // Create a timeout abort controller
+  const timeoutController = new AbortController()
+  const timeoutId = setTimeout(() => timeoutController.abort(), REQUEST_TIMEOUT)
+
+  // Combine with external signal if provided
+  const combinedSignal = signal
+    ? AbortSignal.any([signal, timeoutController.signal])
+    : timeoutController.signal
+
   try {
     const response = await fetch(url, {
       method: 'HEAD',
       mode: 'cors',
-      signal,
+      signal: combinedSignal,
     })
 
+    clearTimeout(timeoutId)
     const vamdcHeaders = parseVamdcHeaders(response.headers)
 
     return {
@@ -49,15 +62,20 @@ async function checkNode(node, query, signal) {
       ...vamdcHeaders,
     }
   } catch (error) {
-    // Don't report abort as an error
+    clearTimeout(timeoutId)
+
+    // Don't report abort as an error (either user cancel or timeout)
     if (error.name === 'AbortError') {
+      // Check if it was a user-initiated abort vs timeout
+      const wasUserAbort = signal?.aborted
       return {
         nodeId: node.id,
         nodeName: node.name,
         nodeUrl: node.url,
         available: false,
         status: 0,
-        aborted: true,
+        aborted: wasUserAbort,
+        error: wasUserAbort ? undefined : 'Timeout',
         queryUrl: url,
       }
     }
@@ -94,6 +112,7 @@ export async function checkAvailabilityStreaming(nodes, query, onResult, signal)
     if (signal?.aborted) return { aborted: true }
 
     const result = await checkNode(node, query, signal)
+    // Only skip user-aborted results, show timeouts and errors
     if (!result.aborted) {
       onResult(result)
     }
