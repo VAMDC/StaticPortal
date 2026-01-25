@@ -1,74 +1,93 @@
 [
   {
     "id": "atomicxsams2html",
-    "name": "Atomic Data to HTML",
-    "description": "Render atomic data as an HTML table",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/atomicxsams2html/service",
+    "name": "Atomic spectroscopy XSAMS to HTML",
+    "description": "XSAMS processor displaying atomic data in a xsams file as an html array.\nThe generated page provide ",
+    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/atomicxsams2html/service",
     "outputType": "text/html",
-    "dataTypes": ["atoms", "radiative"]
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
   },
   {
-    "id": "molecularxsams2html",
-    "name": "Molecular Data to HTML",
-    "description": "Render molecular data as an HTML table",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/molecularxsams2html/service",
+    "id": "XSAMS-bibtex",
+    "name": "BibTeX from XSAMS",
+    "description": "A web-application to extract a bibliography from an XSAMS document and to render it in BibTeX.",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-bibtex/service",
     "outputType": "text/html",
-    "dataTypes": ["molecules", "radiative"]
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
   },
   {
     "id": "collisions2html",
-    "name": "Collision Data to HTML",
-    "description": "Render collision data as an HTML table",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/collisions2html/service",
+    "name": "Collisional data XSAMS to HTML",
+    "description": "The collisions2html converts a XSAMS file containing collisional data into a HTML file.",
+    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/collisions2html/service",
     "outputType": "text/html",
-    "dataTypes": ["collisions"]
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
   },
   {
-    "id": "linespec",
-    "name": "Line Spectrum Visualization",
-    "description": "Generate an SVG visualization of spectral lines",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/linespec/service",
-    "outputType": "image/svg+xml",
-    "dataTypes": ["radiative"]
-  },
-  {
-    "id": "xsams2sme",
-    "name": "Convert to SME Format",
-    "description": "Convert XSAMS to SME (Spectroscopy Made Easy) format",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/xsams2sme/service",
-    "outputType": "text/plain",
-    "dataTypes": ["atoms", "radiative"]
-  },
-  {
-    "id": "specsynth",
-    "name": "Spectrum Synthesis (JSON)",
-    "description": "Generate synthetic spectra in JSON format",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/specsynth/service",
-    "outputType": "application/json",
-    "dataTypes": ["radiative"]
-  },
-  {
-    "id": "xsams-bibtex",
-    "name": "BibTeX from XSAMS",
-    "description": "Extract bibliography from XSAMS and render as BibTeX",
-    "url": "http://vamdc.ast.cam.ac.uk/xsams-bibtex/service",
-    "outputType": "text/plain",
-    "dataTypes": ["atoms", "molecules", "radiative", "collisions"]
+    "id": "molecularspectroscopyxsams2html",
+    "name": "Molecular spectroscopy XSAMS to HTML",
+    "description": "XSAMS processor converting a XSAMS file containing molecular spectroscopy data into a HTML file",
+    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/molecularxsams2html/service",
+    "outputType": "text/html",
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
   },
   {
     "id": "xsams-views",
-    "name": "Table Views of XSAMS",
-    "description": "General tabular and textual views of XSAMS data",
-    "url": "http://vamdc.ast.cam.ac.uk/xsams-views/service",
+    "name": "Table views of XSAMS",
+    "description": "General views of data in XSAMS format. The display is tabular and textual. Initial display is a list",
+    "url": "http://vamdc2.ast.cam.ac.uk:8080/xsams-views/service",
     "outputType": "text/html",
-    "dataTypes": ["atoms", "molecules", "radiative", "collisions"]
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
   },
   {
-    "id": "xsams2hitran",
-    "name": "XSAMS to HITRAN",
-    "description": "Convert XSAMS to HITRAN format",
-    "url": "http://xsams-processors.obspm.fr/hitran-processor/service",
-    "outputType": "text/plain",
-    "dataTypes": ["molecules", "radiative"]
+    "id": "xsams-mux",
+    "name": "XSAMS multiplexor",
+    "description": "The multiplexor combines two or more XSAMS documents into one. The output is the union of inputs. No",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-mux/service",
+    "outputType": "text/html",
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
+  },
+  {
+    "id": "xsams2sme",
+    "name": "Xsams2SME",
+    "description": "XSAMS processor that converts XML document into the CSV-format wanted by Spectroscopy Made Easy (SME",
+    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/xsams2sme/service",
+    "outputType": "text/html",
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
   }
 ]
