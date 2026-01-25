@@ -88,7 +88,11 @@ export async function checkAvailabilityStreaming(nodes, query, onResult, signal)
     return
   }
 
-  const promises = nodes.map(async (node) => {
+  const promises = nodes.map(async (node, index) => {
+    // Stagger requests slightly to make streaming visible
+    await new Promise(r => setTimeout(r, index * 50))
+    if (signal?.aborted) return { aborted: true }
+
     const result = await checkNode(node, query, signal)
     if (!result.aborted) {
       onResult(result)
