@@ -5,8 +5,11 @@ import consumers from '../data/consumers.json'
 
 const queryStore = useQueryStore()
 
-// Selected node and consumer
-const selectedNode = ref(null)
+// Selected node (synced with store) and consumer
+const selectedNode = computed({
+  get: () => queryStore.selectedNodeId,
+  set: (value) => queryStore.selectNode(value)
+})
 const selectedConsumer = ref(null)
 
 // Get nodes with available data

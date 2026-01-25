@@ -12,6 +12,7 @@ export const useQueryStore = defineStore('query', {
     previewResults: [],
     isPreviewLoading: false,
     pendingNodeCount: 0,
+    selectedNodeId: null,
   }),
 
   getters: {
@@ -94,6 +95,10 @@ export const useQueryStore = defineStore('query', {
       }
       this.isPreviewLoading = false
       this.pendingNodeCount = 0
+    },
+
+    selectNode(nodeId) {
+      this.selectedNodeId = nodeId
     },
 
     syncToURL(replace = false) {

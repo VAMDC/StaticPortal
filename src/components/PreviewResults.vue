@@ -1,11 +1,12 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 import { useQueryStore } from '../stores/query.js'
 
 const queryStore = useQueryStore()
 
 const results = computed(() => queryStore.previewResults)
 const isLoading = computed(() => queryStore.isPreviewLoading)
+const selectedNodeId = computed(() => queryStore.selectedNodeId)
 
 const availableCount = computed(() =>
   results.value.filter(r => r.available).length
@@ -18,6 +19,17 @@ function formatCount(result) {
   if (result.stateCount) counts.push(`${result.stateCount} states`)
   if (result.processCount) counts.push(`${result.processCount} transitions`)
   return counts.length > 0 ? counts.join(', ') : 'Data available'
+}
+
+function selectNode(nodeId) {
+  queryStore.selectNode(nodeId)
+  // Scroll to consumer select panel
+  nextTick(() => {
+    const consumerPanel = document.querySelector('.consumer-select')
+    if (consumerPanel) {
+      consumerPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  })
 }
 </script>
 
@@ -44,7 +56,13 @@ function formatCount(result) {
           v-for="result in results"
           :key="result.nodeId"
           class="result-item"
-          :class="{ available: result.available, unavailable: !result.available }"
+          :class="{
+            available: result.available,
+            unavailable: !result.available,
+            selected: result.available && result.nodeId === selectedNodeId,
+            clickable: result.available
+          }"
+          @click="result.available && selectNode(result.nodeId)"
         >
           <span
             class="node-status"
@@ -71,6 +89,7 @@ function formatCount(result) {
             target="_blank"
             class="download-link"
             title="Download XSAMS data"
+            @click.stop
           >
             Download
           </a>
@@ -117,6 +136,19 @@ function formatCount(result) {
 
 .result-item.unavailable {
   opacity: 0.6;
+}
+
+.result-item.clickable {
+  cursor: pointer;
+}
+
+.result-item.clickable:hover {
+  background: var(--color-bg);
+}
+
+.result-item.selected {
+  background: var(--color-primary-light, #e6f0ff);
+  border-radius: var(--radius);
 }
 
 .result-info {
