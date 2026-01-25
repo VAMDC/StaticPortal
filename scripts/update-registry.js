@@ -33,13 +33,6 @@ const NODES_XQUERY = `
   return $x
 `.trim()
 
-// XQuery to fetch XSAMS consumers (data processors)
-const CONSUMERS_XQUERY = `
-  for $x in //*:Resource[not (@status='inactive') and not (@status='deleted')]
-  where $x/*:capability[@standardID='ivo://vamdc/std/XSAMS-consumer']
-  return $x
-`.trim()
-
 /**
  * Build SOAP envelope for registry query
  */
@@ -167,36 +160,6 @@ function parseNodes(xml) {
   }
 
   return nodes
-}
-
-/**
- * Parse consumers from registry response
- */
-function parseConsumers(xml) {
-  const consumers = []
-
-  const resourcePattern = /<[^:]*:?Resource[^>]*>[\s\S]*?<\/[^:]*:?Resource>/gi
-  const resources = xml.match(resourcePattern) || []
-
-  for (const resource of resources) {
-    const id = extractIdentifier(resource)
-    const name = extractText(resource, 'title')
-    const description = extractText(resource, 'description') || ''
-    const url = extractAccessURL(resource, 'ivo://vamdc/std/XSAMS-consumer')
-
-    if (id && name && url) {
-      consumers.push({
-        id: id.split('/').pop(), // Use last part of IVO ID as short id
-        name,
-        description: description.slice(0, 100),
-        url,
-        outputType: 'text/html', // Default, could be extracted from capability
-        dataTypes: ['atoms', 'molecules', 'radiative', 'collisions'], // Default to all
-      })
-    }
-  }
-
-  return consumers
 }
 
 /**
