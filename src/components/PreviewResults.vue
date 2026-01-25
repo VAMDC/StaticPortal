@@ -8,6 +8,14 @@ const results = computed(() => queryStore.previewResults)
 const isLoading = computed(() => queryStore.isPreviewLoading)
 const selectedNodeId = computed(() => queryStore.selectedNodeId)
 
+// Sort results: available (green) first, then by name
+const sortedResults = computed(() =>
+  [...results.value].sort((a, b) => {
+    if (a.available !== b.available) return b.available - a.available
+    return a.nodeName.localeCompare(b.nodeName)
+  })
+)
+
 const availableCount = computed(() =>
   results.value.filter(r => r.available).length
 )
@@ -53,7 +61,7 @@ function selectNode(nodeId) {
 
       <ul v-else class="results-list">
         <li
-          v-for="result in results"
+          v-for="result in sortedResults"
           :key="result.nodeId"
           class="result-item"
           :class="{
