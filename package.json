@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "update-registry": "node scripts/update-registry.js"
   },
   "dependencies": {
     "pinia": "^2.1.7",
