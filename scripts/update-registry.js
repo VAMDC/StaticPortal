@@ -227,28 +227,47 @@ async function fetchServiceUrl(baseUrl) {
     const interfacePattern = /<interface[^>]*xsi:type=["']vs:ParamHTTP["'][^>]*>([\s\S]*?)<\/interface>/i
     const interfaceMatch = xml.match(interfacePattern)
 
+    let serviceUrl = null
+
     if (interfaceMatch) {
       const interfaceXml = interfaceMatch[1]
       // Extract accessURL from the interface block
       const urlPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
       const urlMatch = interfaceXml.match(urlPattern)
       if (urlMatch) {
-        const url = urlMatch[1].trim()
-        if (DEBUG) console.log(`    Found service URL: ${url}`)
-        return url
+        serviceUrl = urlMatch[1].trim()
       }
     }
 
     // Fallback: try any accessURL if interface pattern didn't match
-    const fallbackPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
-    const fallbackMatch = xml.match(fallbackPattern)
-    if (fallbackMatch) {
-      const url = fallbackMatch[1].trim()
-      if (DEBUG) console.log(`    Found service URL (fallback): ${url}`)
-      return url
+    if (!serviceUrl) {
+      const fallbackPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
+      const fallbackMatch = xml.match(fallbackPattern)
+      if (fallbackMatch) {
+        serviceUrl = fallbackMatch[1].trim()
+      }
     }
 
-    return null
+    // If we got a localhost URL, construct from base URL instead
+    if (serviceUrl && (serviceUrl.includes('127.0.0.1') || serviceUrl.includes('localhost'))) {
+      if (DEBUG) console.log(`    Got localhost URL: ${serviceUrl}, using base URL instead`)
+      // Extract the path from the localhost URL and apply to base URL
+      try {
+        const localUrl = new URL(serviceUrl)
+        const base = new URL(baseUrl)
+        serviceUrl = `${base.origin}${localUrl.pathname}`
+        if (DEBUG) console.log(`    Constructed URL: ${serviceUrl}`)
+      } catch {
+        // If URL parsing fails, just append /service to base
+        serviceUrl = baseUrl.endsWith('/') ? `${baseUrl}service` : `${baseUrl}/service`
+      }
+    }
+
+    if (serviceUrl) {
+      if (DEBUG) console.log(`    Found service URL: ${serviceUrl}`)
+    }
+
+    return serviceUrl
   } catch (error) {
     if (DEBUG) console.log(`    Error fetching ${capabilitiesUrl}: ${error.message}`)
     return null
