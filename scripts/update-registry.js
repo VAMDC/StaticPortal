@@ -17,6 +17,9 @@ import { dirname, join } from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+// Parse command line args
+const DEBUG = process.argv.includes('--debug')
+
 const REGISTRY_URL = 'https://registry.vamdc.org/registry-12.07/services/RegistryQueryv1_0'
 
 // XQuery to fetch VAMDC-TAP nodes (data providers)
@@ -201,6 +204,15 @@ async function updateRegistry() {
   try {
     // Fetch nodes
     const nodesXml = await fetchFromRegistry(NODES_XQUERY)
+
+    if (DEBUG) {
+      const debugPath = join(dataDir, '..', '..', 'debug-nodes-response.xml')
+      writeFileSync(debugPath, nodesXml)
+      console.log(`  Debug: Saved raw response to ${debugPath}`)
+      console.log(`  Debug: Response length: ${nodesXml.length} chars`)
+      console.log(`  Debug: First 500 chars: ${nodesXml.slice(0, 500)}`)
+    }
+
     const nodes = parseNodes(nodesXml)
 
     if (nodes.length === 0) {
@@ -225,6 +237,13 @@ async function updateRegistry() {
   try {
     // Fetch consumers
     const consumersXml = await fetchFromRegistry(CONSUMERS_XQUERY)
+
+    if (DEBUG) {
+      const debugPath = join(dataDir, '..', '..', 'debug-consumers-response.xml')
+      writeFileSync(debugPath, consumersXml)
+      console.log(`  Debug: Saved raw response to ${debugPath}`)
+    }
+
     const consumers = parseConsumers(consumersXml)
 
     if (consumers.length === 0) {
