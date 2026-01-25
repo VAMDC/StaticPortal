@@ -242,16 +242,20 @@ StaticPortal/
 
 ## Current Status
 
-**Phase 1 Complete** - MVP with Atoms form is fully implemented and tested.
+**Phases 1-3 Complete** - Full query builder with all form types.
 
 ### What's Working
 - Vue 3 + Vite + Pinia project structure
 - AtomsForm with element autocomplete (full periodic table)
+- MoleculesForm for molecular species searches
+- RadiativeForm with real-time unit conversion (wavelength/frequency/wavenumber/energy)
 - VSS2 query generation from form state
 - URL state encoding/decoding (shareable links)
+- URL auto-restore on page load
+- Browser back/forward navigation support
 - Node preview via HEAD requests
-- 27 unit tests passing
-- Production build: 33KB gzipped
+- 58 unit tests passing
+- Production build: ~35KB gzipped
 
 ### To Run
 ```bash
@@ -273,15 +277,15 @@ npm run build    # Production build to dist/
 5. ✅ Add node preview (HEAD requests)
 6. ✅ Basic styling
 
-### Phase 2: URL State
-1. Encode form state to URL hash
-2. Decode URL hash on load
-3. Browser back/forward support
+### Phase 2: URL State ✅ COMPLETE
+1. ✅ Encode form state to URL hash
+2. ✅ Decode URL hash on load
+3. ✅ Browser back/forward support
 
-### Phase 3: Additional Forms
-1. `MoleculesForm` component
-2. `RadiativeForm` with unit conversion
-3. `useUnits` composable with tests
+### Phase 3: Additional Forms ✅ COMPLETE
+1. ✅ `MoleculesForm` component
+2. ✅ `RadiativeForm` with unit conversion
+3. ✅ `useUnits` composable with tests
 
 ### Phase 4: Consumer Integration
 1. `ConsumerSelect` component

@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { useQueryStore } from './stores/query.js'
 import QueryBuilder from './components/QueryBuilder.vue'
 import NodeList from './components/NodeList.vue'
@@ -9,6 +9,24 @@ const queryStore = useQueryStore()
 
 const vss2Query = computed(() => queryStore.vss2Query)
 const hasQuery = computed(() => queryStore.hasValidQuery)
+
+// Load state from URL on mount
+onMounted(() => {
+  queryStore.loadFromURL()
+})
+
+// Handle browser back/forward navigation
+const handlePopState = () => {
+  queryStore.loadFromURL()
+}
+
+onMounted(() => {
+  window.addEventListener('popstate', handlePopState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', handlePopState)
+})
 </script>
 
 <template>

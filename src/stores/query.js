@@ -64,12 +64,18 @@ export const useQueryStore = defineStore('query', {
       }
     },
 
-    syncToURL() {
+    syncToURL(replace = false) {
       const hash = encodeToURL(this.forms)
-      if (hash) {
-        window.history.replaceState(null, '', `#${hash}`)
+      const newURL = hash ? `#${hash}` : window.location.pathname
+      const currentHash = window.location.hash.slice(1)
+
+      // Skip if URL hasn't changed
+      if (hash === currentHash) return
+
+      if (replace) {
+        window.history.replaceState(null, '', newURL)
       } else {
-        window.history.replaceState(null, '', window.location.pathname)
+        window.history.pushState(null, '', newURL)
       }
     },
 

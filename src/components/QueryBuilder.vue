@@ -1,11 +1,13 @@
 <script setup>
 import { useQueryStore } from '../stores/query.js'
 import AtomsForm from './forms/AtomsForm.vue'
+import MoleculesForm from './forms/MoleculesForm.vue'
+import RadiativeForm from './forms/RadiativeForm.vue'
 
 const queryStore = useQueryStore()
 
-function addAtomsForm() {
-  queryStore.addForm('atoms')
+function addForm(type) {
+  queryStore.addForm(type)
 }
 
 function removeForm(formId) {
@@ -26,10 +28,15 @@ function runPreview() {
 
     <div class="panel-body">
       <div class="form-type-buttons">
-        <button class="secondary" @click="addAtomsForm">
+        <button class="secondary" @click="addForm('atoms')">
           + Atoms
         </button>
-        <!-- Future: Molecules, Radiative buttons -->
+        <button class="secondary" @click="addForm('molecules')">
+          + Molecules
+        </button>
+        <button class="secondary" @click="addForm('radiative')">
+          + Radiative
+        </button>
       </div>
 
       <div v-if="queryStore.forms.length === 0" class="empty-state">
@@ -44,6 +51,18 @@ function runPreview() {
         >
           <AtomsForm
             v-if="form.type === 'atoms'"
+            :form-id="form.id"
+            :fields="form.fields"
+            @remove="removeForm(form.id)"
+          />
+          <MoleculesForm
+            v-if="form.type === 'molecules'"
+            :form-id="form.id"
+            :fields="form.fields"
+            @remove="removeForm(form.id)"
+          />
+          <RadiativeForm
+            v-if="form.type === 'radiative'"
             :form-id="form.id"
             :fields="form.fields"
             @remove="removeForm(form.id)"
