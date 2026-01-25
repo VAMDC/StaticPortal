@@ -72,11 +72,19 @@ function runPreview() {
 
       <div v-if="queryStore.forms.length > 0" class="actions">
         <button
+          v-if="!queryStore.isPreviewLoading"
           class="primary"
-          :disabled="!queryStore.hasValidQuery || queryStore.isPreviewLoading"
+          :disabled="!queryStore.hasValidQuery"
           @click="runPreview"
         >
-          {{ queryStore.isPreviewLoading ? 'Checking...' : 'Preview Availability' }}
+          Preview Availability
+        </button>
+        <button
+          v-else
+          class="secondary"
+          @click="queryStore.stopPreview()"
+        >
+          Stop ({{ queryStore.pendingNodeCount }} pending)
         </button>
       </div>
     </div>

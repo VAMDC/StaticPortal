@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia'
 import { generateQuery, encodeToURL, parseFromURL } from '../composables/useVSS2.js'
-import { checkAvailability } from '../composables/useNodes.js'
+import { checkAvailabilityStreaming } from '../composables/useNodes.js'
 import nodes from '../data/nodes.json'
+
+// Store abort controller outside of reactive state
+let previewAbortController = null
 
 export const useQueryStore = defineStore('query', {
   state: () => ({
     forms: [],
     previewResults: [],
     isPreviewLoading: false,
+    pendingNodeCount: 0,
   }),
 
   getters: {
@@ -51,17 +55,45 @@ export const useQueryStore = defineStore('query', {
     async runPreview() {
       if (!this.hasValidQuery) return
 
+      // Cancel any existing preview
+      if (previewAbortController) {
+        previewAbortController.abort()
+      }
+
+      previewAbortController = new AbortController()
       this.isPreviewLoading = true
       this.previewResults = []
+      this.pendingNodeCount = nodes.length
 
       try {
-        const results = await checkAvailability(nodes, this.vss2Query)
-        this.previewResults = results
+        await checkAvailabilityStreaming(
+          nodes,
+          this.vss2Query,
+          (result) => {
+            // Add result as it arrives
+            this.previewResults.push(result)
+            this.pendingNodeCount--
+          },
+          previewAbortController.signal
+        )
       } catch (error) {
-        console.error('Preview failed:', error)
+        if (error.name !== 'AbortError') {
+          console.error('Preview failed:', error)
+        }
       } finally {
         this.isPreviewLoading = false
+        this.pendingNodeCount = 0
+        previewAbortController = null
       }
+    },
+
+    stopPreview() {
+      if (previewAbortController) {
+        previewAbortController.abort()
+        previewAbortController = null
+      }
+      this.isPreviewLoading = false
+      this.pendingNodeCount = 0
     },
 
     syncToURL(replace = false) {

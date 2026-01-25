@@ -24,15 +24,17 @@ function parseVamdcHeaders(headers) {
  *
  * @param {Object} node - Node object with id, name, url
  * @param {string} query - VSS2 query string
+ * @param {AbortSignal} signal - Optional abort signal
  * @returns {Promise<Object>} Result with availability info
  */
-async function checkNode(node, query) {
+async function checkNode(node, query, signal) {
   const url = buildQueryURL(node, query)
 
   try {
     const response = await fetch(url, {
       method: 'HEAD',
       mode: 'cors',
+      signal,
     })
 
     const vamdcHeaders = parseVamdcHeaders(response.headers)
@@ -47,6 +49,18 @@ async function checkNode(node, query) {
       ...vamdcHeaders,
     }
   } catch (error) {
+    // Don't report abort as an error
+    if (error.name === 'AbortError') {
+      return {
+        nodeId: node.id,
+        nodeName: node.name,
+        nodeUrl: node.url,
+        available: false,
+        status: 0,
+        aborted: true,
+        queryUrl: url,
+      }
+    }
     return {
       nodeId: node.id,
       nodeName: node.name,
@@ -60,7 +74,34 @@ async function checkNode(node, query) {
 }
 
 /**
+ * Check data availability across multiple nodes in parallel,
+ * streaming results as they arrive.
+ *
+ * @param {Array} nodes - Array of node objects
+ * @param {string} query - VSS2 query string
+ * @param {Function} onResult - Callback called with each result as it arrives
+ * @param {AbortSignal} signal - Optional abort signal to cancel pending requests
+ * @returns {Promise<void>} Resolves when all requests complete or are aborted
+ */
+export async function checkAvailabilityStreaming(nodes, query, onResult, signal) {
+  if (!query) {
+    return
+  }
+
+  const promises = nodes.map(async (node) => {
+    const result = await checkNode(node, query, signal)
+    if (!result.aborted) {
+      onResult(result)
+    }
+    return result
+  })
+
+  await Promise.allSettled(promises)
+}
+
+/**
  * Check data availability across multiple nodes in parallel
+ * (Legacy non-streaming version for backwards compatibility)
  *
  * @param {Array} nodes - Array of node objects
  * @param {string} query - VSS2 query string
@@ -71,21 +112,11 @@ export async function checkAvailability(nodes, query) {
     return []
   }
 
-  const promises = nodes.map(node => checkNode(node, query))
-  const results = await Promise.allSettled(promises)
-
-  return results.map((result, index) => {
-    if (result.status === 'fulfilled') {
-      return result.value
-    } else {
-      return {
-        nodeId: nodes[index].id,
-        nodeName: nodes[index].name,
-        available: false,
-        error: result.reason?.message || 'Unknown error',
-      }
-    }
+  const results = []
+  await checkAvailabilityStreaming(nodes, query, (result) => {
+    results.push(result)
   })
+  return results
 }
 
 /**
