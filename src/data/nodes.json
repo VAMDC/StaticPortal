@@ -86,7 +86,7 @@
   {
     "id": "ivo://vamdc/ghosst",
     "name": "GhoSST",
-    "description": "The GhoSST database (&quot;Grenoble Astrophysics and \nPlanetology Solid Spectroscopy and Thermodynam",
+    "description": "The GhoSST database (\"Grenoble Astrophysics and Planetology Solid Spectroscopy and Thermodynamics\"",
     "url": "https://vamdc:vamdcGhosst@ghosst-archive.osug.fr/vamdc/tap/"
   },
   {
@@ -176,7 +176,7 @@
   {
     "id": "ivo://vamdc/stark-b/tap-xsams",
     "name": "Stark-b",
-    "description": "Database for &quot;Stark&quot; broadening of isolated lines of atoms and ions in the impact approxim",
+    "description": "Database for \"Stark\" broadening of isolated lines of atoms and ions in the impact approximation",
     "url": "http://stark-b.obspm.fr/12.07/vamdc/tap/"
   },
   {
@@ -217,13 +217,13 @@
   },
   {
     "id": "ivo://vamdc/vald/uu/all",
-    "name": "VALD atoms &amp; molecules, observed &amp; predicted lines",
+    "name": "VALD atoms & molecules, observed & predicted lines",
     "description": "The Vienna Atomic Line Database (VALD) is a collection of line parameters (wavelengths, transition e",
     "url": "https://vald.astro.uu.se/vamdc-all/tap/"
   },
   {
     "id": "ivo://vamdc/vald/uu/obs",
-    "name": "VALD atoms &amp; molecules, observed lines only",
+    "name": "VALD atoms & molecules, observed lines only",
     "description": "The Vienna Atomic Line Database (VALD) is a collection of line parameters (wavelengths, transition e",
     "url": "https://vald.astro.uu.se/vamdc-obs/tap/"
   },
