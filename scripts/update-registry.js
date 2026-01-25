@@ -54,6 +54,20 @@ function buildSoapRequest(xquery) {
 }
 
 /**
+ * Decode HTML entities in text
+ */
+function decodeEntities(text) {
+  if (!text) return text
+  return text
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+}
+
+/**
  * Extract text content from XML element
  */
 function extractText(xml, tagName) {
@@ -65,7 +79,7 @@ function extractText(xml, tagName) {
 
   for (const pattern of patterns) {
     const match = xml.match(pattern)
-    if (match) return match[1].trim()
+    if (match) return decodeEntities(match[1].trim())
   }
   return null
 }
