@@ -110,6 +110,199 @@ describe('useVSS2', () => {
       expect(query).toContain("AtomSymbol = 'H'")
       expect(query).toContain("AtomSymbol = 'He'")
     })
+
+    // Molecules form tests
+    it('generates query for molecule stoichiometric formula', () => {
+      const forms = [{
+        id: 1,
+        type: 'molecules',
+        fields: { stoichiometricFormula: 'H2O' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE MoleculeStoichiometricFormula = 'H2O'")
+    })
+
+    it('generates query for molecule chemical name', () => {
+      const forms = [{
+        id: 1,
+        type: 'molecules',
+        fields: { chemicalName: 'water' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE MoleculeChemicalName = 'water'")
+    })
+
+    it('generates query for molecule InChIKey', () => {
+      const forms = [{
+        id: 1,
+        type: 'molecules',
+        fields: { inchikey: 'XLYOFNOQVPJJNP-UHFFFAOYSA-N' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE InChIKey = 'XLYOFNOQVPJJNP-UHFFFAOYSA-N'")
+    })
+
+    it('combines molecule fields with AND', () => {
+      const forms = [{
+        id: 1,
+        type: 'molecules',
+        fields: { stoichiometricFormula: 'CO2', chemicalName: 'carbon dioxide' }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain("MoleculeStoichiometricFormula = 'CO2'")
+      expect(query).toContain("MoleculeChemicalName = 'carbon dioxide'")
+      expect(query).toContain('AND')
+    })
+
+    // Radiative form tests
+    it('generates query for radiative wavelength range', () => {
+      const forms = [{
+        id: 1,
+        type: 'radiative',
+        fields: { wavelengthMin: 4000, wavelengthMax: 7000 }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain('RadTransWavelength >= 4000')
+      expect(query).toContain('RadTransWavelength <= 7000')
+    })
+
+    it('generates query for radiative frequency range', () => {
+      const forms = [{
+        id: 1,
+        type: 'radiative',
+        fields: { frequencyMin: 1000, frequencyMax: 2000 }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain('RadTransFrequency >= 1000')
+      expect(query).toContain('RadTransFrequency <= 2000')
+    })
+
+    it('generates query for radiative wavenumber range', () => {
+      const forms = [{
+        id: 1,
+        type: 'radiative',
+        fields: { wavenumberMin: 10000, wavenumberMax: 25000 }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain('RadTransWavenumber >= 10000')
+      expect(query).toContain('RadTransWavenumber <= 25000')
+    })
+
+    it('generates query for radiative energy range', () => {
+      const forms = [{
+        id: 1,
+        type: 'radiative',
+        fields: { energyMin: 1.5, energyMax: 3.0 }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain('RadTransEnergy >= 1.5')
+      expect(query).toContain('RadTransEnergy <= 3')
+    })
+
+    it('generates query for single radiative wavelength bound', () => {
+      const forms = [{
+        id: 1,
+        type: 'radiative',
+        fields: { wavelengthMin: 5000 }
+      }]
+      expect(generateQuery(forms)).toBe('SELECT * WHERE RadTransWavelength >= 5000')
+    })
+
+    // Collisions form tests
+    it('generates query for collision target atom symbol', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { targetSymbol: 'H' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE AtomSymbol = 'H'")
+    })
+
+    it('generates query for collision target molecule formula', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { targetFormula: 'H2' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE MoleculeStoichiometricFormula = 'H2'")
+    })
+
+    it('generates query for collision species (collider)', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { colliderSymbol: 'e-' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE CollisionSpecies = 'e-'")
+    })
+
+    it('generates query for collision process type', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { processType: 'ioni' }
+      }]
+      expect(generateQuery(forms)).toBe("SELECT * WHERE CollisionCode = 'ioni'")
+    })
+
+    it('generates query for collision temperature range', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { temperatureMin: 100, temperatureMax: 1000 }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain('CollisionTrange >= 100')
+      expect(query).toContain('CollisionTrange <= 1000')
+    })
+
+    it('generates query for collision energy range', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { energyMin: 0.1, energyMax: 10 }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain('CollisionEnergy >= 0.1')
+      expect(query).toContain('CollisionEnergy <= 10')
+    })
+
+    it('combines collision fields with AND', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: {
+          targetSymbol: 'H',
+          colliderSymbol: 'e-',
+          processType: 'exci'
+        }
+      }]
+      const query = generateQuery(forms)
+      expect(query).toContain("AtomSymbol = 'H'")
+      expect(query).toContain("CollisionSpecies = 'e-'")
+      expect(query).toContain("CollisionCode = 'exci'")
+      expect(query.match(/AND/g).length).toBe(2)
+    })
+
+    // Mixed form tests
+    it('combines atoms and molecules forms', () => {
+      const forms = [
+        { id: 1, type: 'atoms', fields: { symbol: 'Fe' } },
+        { id: 2, type: 'molecules', fields: { stoichiometricFormula: 'H2O' } }
+      ]
+      const query = generateQuery(forms)
+      expect(query).toContain("AtomSymbol = 'Fe'")
+      expect(query).toContain("MoleculeStoichiometricFormula = 'H2O'")
+    })
+
+    it('combines atoms and radiative forms', () => {
+      const forms = [
+        { id: 1, type: 'atoms', fields: { symbol: 'Fe', ionChargeMin: 1 } },
+        { id: 2, type: 'radiative', fields: { wavelengthMin: 4000, wavelengthMax: 7000 } }
+      ]
+      const query = generateQuery(forms)
+      expect(query).toContain("AtomSymbol = 'Fe'")
+      expect(query).toContain('AtomIonCharge >= 1')
+      expect(query).toContain('RadTransWavelength >= 4000')
+      expect(query).toContain('RadTransWavelength <= 7000')
+    })
   })
 
   describe('encodeToURL', () => {
@@ -222,6 +415,62 @@ describe('useVSS2', () => {
 
       expect(decoded[0].fields.ionChargeMin).toBe(1)
       expect(decoded[0].fields.ionChargeMax).toBe(3)
+    })
+
+    it('round-trips molecules form', () => {
+      const original = [{
+        id: 1,
+        type: 'molecules',
+        fields: { stoichiometricFormula: 'H2O', chemicalName: 'water' }
+      }]
+      const encoded = encodeToURL(original)
+      const decoded = parseFromURL(encoded)
+
+      expect(decoded[0].type).toBe('molecules')
+      expect(decoded[0].fields.stoichiometricFormula).toBe('H2O')
+      expect(decoded[0].fields.chemicalName).toBe('water')
+    })
+
+    it('round-trips radiative form with numeric ranges', () => {
+      const original = [{
+        id: 1,
+        type: 'radiative',
+        fields: { wavelengthMin: 4000, wavelengthMax: 7000 }
+      }]
+      const encoded = encodeToURL(original)
+      const decoded = parseFromURL(encoded)
+
+      expect(decoded[0].type).toBe('radiative')
+      expect(decoded[0].fields.wavelengthMin).toBe(4000)
+      expect(decoded[0].fields.wavelengthMax).toBe(7000)
+    })
+
+    it('round-trips collisions form', () => {
+      const original = [{
+        id: 1,
+        type: 'collisions',
+        fields: { targetSymbol: 'H', temperatureMin: 100, temperatureMax: 1000 }
+      }]
+      const encoded = encodeToURL(original)
+      const decoded = parseFromURL(encoded)
+
+      expect(decoded[0].type).toBe('collisions')
+      expect(decoded[0].fields.targetSymbol).toBe('H')
+      expect(decoded[0].fields.temperatureMin).toBe(100)
+      expect(decoded[0].fields.temperatureMax).toBe(1000)
+    })
+
+    it('round-trips mixed form types', () => {
+      const original = [
+        { id: 1, type: 'atoms', fields: { symbol: 'Fe' } },
+        { id: 2, type: 'radiative', fields: { wavelengthMin: 5000 } }
+      ]
+      const encoded = encodeToURL(original)
+      const decoded = parseFromURL(encoded)
+
+      expect(decoded).toHaveLength(2)
+      expect(decoded.find(f => f.type === 'atoms').fields.symbol).toBe('Fe')
+      expect(decoded.find(f => f.type === 'radiative').fields.wavelengthMin).toBe(5000)
     })
   })
 
