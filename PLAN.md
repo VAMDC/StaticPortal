@@ -242,21 +242,23 @@ StaticPortal/
 
 ## Current Status
 
-**All Phases Complete** - Full-featured client-only VAMDC portal.
+**All Phases Complete + Extras** - Full-featured client-only VAMDC portal with offline support.
 
 ### What's Working
 - Vue 3 + Vite + Pinia project structure
 - AtomsForm with element autocomplete (full periodic table)
 - MoleculesForm for molecular species searches
 - RadiativeForm with real-time unit conversion (wavelength/frequency/wavenumber/energy)
+- CollisionsForm for collision data queries
 - VSS2 query generation from form state
 - URL state encoding/decoding (shareable links)
 - URL auto-restore on page load
 - Browser back/forward navigation support
-- Node preview via HEAD requests
+- Node preview via HEAD requests (streaming results + cancel)
 - Consumer service integration (XSAMS processors)
+- PWA with offline support (service worker caching)
 - 58 unit tests passing
-- Production build: ~36KB gzipped
+- Production build: ~37KB gzipped
 
 ### To Run
 ```bash
@@ -340,8 +342,9 @@ npm run build   # Produces dist/ folder
 
 - [ ] Fetch node list from registry (if JSON endpoint added)
 - [ ] Species autocomplete from node capabilities
-- [ ] Collisions and Particles forms
+- [x] Collisions form
+- [ ] Particles form
 - [ ] Environment form
 - [ ] Export query as Python/pyVAMDC script
 - [ ] Dark mode
-- [ ] PWA for offline use
+- [x] PWA for offline use

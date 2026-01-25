@@ -3,6 +3,7 @@ import { useQueryStore } from '../stores/query.js'
 import AtomsForm from './forms/AtomsForm.vue'
 import MoleculesForm from './forms/MoleculesForm.vue'
 import RadiativeForm from './forms/RadiativeForm.vue'
+import CollisionsForm from './forms/CollisionsForm.vue'
 
 const queryStore = useQueryStore()
 
@@ -37,6 +38,9 @@ function runPreview() {
         <button class="secondary" @click="addForm('radiative')">
           + Radiative
         </button>
+        <button class="secondary" @click="addForm('collisions')">
+          + Collisions
+        </button>
       </div>
 
       <div v-if="queryStore.forms.length === 0" class="empty-state">
@@ -63,6 +67,12 @@ function runPreview() {
           />
           <RadiativeForm
             v-if="form.type === 'radiative'"
+            :form-id="form.id"
+            :fields="form.fields"
+            @remove="removeForm(form.id)"
+          />
+          <CollisionsForm
+            v-if="form.type === 'collisions'"
             :form-id="form.id"
             :fields="form.fields"
             @remove="removeForm(form.id)"

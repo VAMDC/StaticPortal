@@ -36,6 +36,17 @@ const RESTRICTABLES = {
     energyMin: 'RadTransEnergy',
     energyMax: 'RadTransEnergy',
   },
+  collisions: {
+    targetSymbol: 'AtomSymbol',
+    targetFormula: 'MoleculeStoichiometricFormula',
+    colliderSymbol: 'CollisionSpecies',
+    colliderFormula: 'CollisionSpecies',
+    processType: 'CollisionCode',
+    energyMin: 'CollisionEnergy',
+    energyMax: 'CollisionEnergy',
+    temperatureMin: 'CollisionTrange',
+    temperatureMax: 'CollisionTrange',
+  },
 }
 
 /**
