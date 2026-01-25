@@ -40,12 +40,13 @@ const CONSUMERS_XQUERY = `
  * Build SOAP envelope for registry query
  */
 function buildSoapRequest(xquery) {
+  // The registry expects 'xquery' element without namespace prefix
   return `<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                   xmlns:ri="http://www.ivoa.net/wsdl/RegistrySearch/v1.0">
   <soapenv:Body>
     <ri:XQuerySearch>
-      <ri:xquery><![CDATA[${xquery}]]></ri:xquery>
+      <xquery><![CDATA[${xquery}]]></xquery>
     </ri:XQuerySearch>
   </soapenv:Body>
 </soapenv:Envelope>`
