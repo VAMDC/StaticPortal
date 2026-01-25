@@ -142,7 +142,7 @@ From VAMDC/Processors repository:
 | collisions2html | text/html | Collision data as HTML table |
 | specsynth | application/json | Spectra in JSON format |
 
-Base URL: `https://xsamsconsumers.vamdc.eu/`
+Base URL: `https://xsamsconsumers.vamdc.eu/applyXSL/`
 
 ## Unit Conversion
 
