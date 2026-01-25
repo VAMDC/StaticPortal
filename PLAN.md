@@ -240,15 +240,38 @@ StaticPortal/
         └── AtomsForm.test.js
 ```
 
+## Current Status
+
+**Phase 1 Complete** - MVP with Atoms form is fully implemented and tested.
+
+### What's Working
+- Vue 3 + Vite + Pinia project structure
+- AtomsForm with element autocomplete (full periodic table)
+- VSS2 query generation from form state
+- URL state encoding/decoding (shareable links)
+- Node preview via HEAD requests
+- 27 unit tests passing
+- Production build: 33KB gzipped
+
+### To Run
+```bash
+npm install
+npm run dev      # Development server at localhost:5173
+npm test         # Run tests in watch mode
+npm run build    # Production build to dist/
+```
+
+---
+
 ## Implementation Phases
 
-### Phase 1: MVP (Atoms Form)
-1. Initialize Vue 3 + Vite project
-2. Create static data files
-3. Implement `useVSS2` composable with tests
-4. Build `AtomsForm` component
-5. Add node preview (HEAD requests)
-6. Basic styling
+### Phase 1: MVP (Atoms Form) ✅ COMPLETE
+1. ✅ Initialize Vue 3 + Vite project
+2. ✅ Create static data files (nodes.json, elements.json, consumers.json)
+3. ✅ Implement `useVSS2` composable with tests
+4. ✅ Build `AtomsForm` component
+5. ✅ Add node preview (HEAD requests)
+6. ✅ Basic styling
 
 ### Phase 2: URL State
 1. Encode form state to URL hash
