@@ -23,16 +23,17 @@ const DEBUG = process.argv.includes('--debug')
 const REGISTRY_URL = 'https://registry.vamdc.org/registry-12.07/services/RegistryQueryv1_0'
 
 // XQuery to fetch VAMDC-TAP nodes (data providers)
+// Use *:Resource to match Resource element in any namespace
 const NODES_XQUERY = `
-  for $x in //vor:Resource[not (@status='inactive') and not (@status='deleted')]
-  where $x/capability[@standardID='ivo://vamdc/std/VAMDC-TAP']
+  for $x in //*:Resource[not (@status='inactive') and not (@status='deleted')]
+  where $x/*:capability[@standardID='ivo://vamdc/std/VAMDC-TAP']
   return $x
 `.trim()
 
 // XQuery to fetch XSAMS consumers (data processors)
 const CONSUMERS_XQUERY = `
-  for $x in //vor:Resource[not (@status='inactive') and not (@status='deleted')]
-  where $x/capability[@standardID='ivo://vamdc/std/XSAMS-consumer']
+  for $x in //*:Resource[not (@status='inactive') and not (@status='deleted')]
+  where $x/*:capability[@standardID='ivo://vamdc/std/XSAMS-consumer']
   return $x
 `.trim()
 
