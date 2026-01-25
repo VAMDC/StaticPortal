@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 /**
- * Update nodes.json from the VAMDC registry
+ * Update nodes.json and consumers.json from the VAMDC registry
  *
  * Usage:
  *   node scripts/update-registry.js
  *   npm run update-registry
  *
  * The VAMDC registry uses SOAP/XML. This script sends XQuery requests
- * to fetch the current list of nodes.
+ * to fetch the current list of nodes and consumers.
  *
- * Note: consumers.json is manually maintained because registry URLs
- * don't include the /service path required by the processors.
+ * For consumers, we fetch the /capabilities endpoint to get the actual
+ * service URL (registry URLs don't include the /service path).
  */
 
 import { writeFileSync } from 'fs'
@@ -30,6 +30,13 @@ const REGISTRY_URL = 'https://registry.vamdc.org/registry-12.07/services/Registr
 const NODES_XQUERY = `
   for $x in //*:Resource[not (@status='inactive') and not (@status='deleted')]
   where $x/*:capability[@standardID='ivo://vamdc/std/VAMDC-TAP']
+  return $x
+`.trim()
+
+// XQuery to fetch XSAMS consumers (data processors)
+const CONSUMERS_XQUERY = `
+  for $x in //*:Resource[not (@status='inactive') and not (@status='deleted')]
+  where $x/*:capability[@standardID='ivo://vamdc/std/XSAMS-consumer']
   return $x
 `.trim()
 
@@ -163,6 +170,82 @@ function parseNodes(xml) {
 }
 
 /**
+ * Parse consumers from registry response (basic info, URL will be fetched from capabilities)
+ */
+function parseConsumers(xml) {
+  const consumers = []
+
+  const resourcePattern = /<[^:]*:?Resource[^>]*>[\s\S]*?<\/[^:]*:?Resource>/gi
+  const resources = xml.match(resourcePattern) || []
+
+  for (const resource of resources) {
+    const id = extractIdentifier(resource)
+    const name = extractText(resource, 'title')
+    const description = extractText(resource, 'description') || ''
+    const baseUrl = extractAccessURL(resource, 'ivo://vamdc/std/XSAMS-consumer')
+
+    if (id && name && baseUrl) {
+      consumers.push({
+        id: id.split('/').pop(), // Use last part of IVO ID as short id
+        name,
+        description: description.slice(0, 100),
+        baseUrl, // This is the capabilities URL base
+        outputType: 'text/html',
+        dataTypes: ['atoms', 'molecules', 'radiative', 'collisions'],
+      })
+    }
+  }
+
+  return consumers
+}
+
+/**
+ * Fetch the service URL from a consumer's capabilities endpoint
+ */
+async function fetchServiceUrl(baseUrl) {
+  // Normalize the base URL
+  const capabilitiesUrl = baseUrl.endsWith('/')
+    ? `${baseUrl}capabilities`
+    : `${baseUrl}/capabilities`
+
+  try {
+    const response = await fetch(capabilitiesUrl, { timeout: 10000 })
+    if (!response.ok) {
+      if (DEBUG) console.log(`    Failed to fetch ${capabilitiesUrl}: ${response.status}`)
+      return null
+    }
+
+    const xml = await response.text()
+
+    if (DEBUG) {
+      console.log(`    Capabilities from ${capabilitiesUrl}:`)
+      console.log(`    ${xml.slice(0, 300)}...`)
+    }
+
+    // Look for service URL in capabilities
+    // Pattern: <accessURL use="full">...</accessURL> or just <accessURL>...</accessURL>
+    const servicePatterns = [
+      /<accessURL[^>]*use=["']full["'][^>]*>([^<]+)<\/accessURL>/i,
+      /<accessURL[^>]*>([^<]+)<\/accessURL>/i,
+    ]
+
+    for (const pattern of servicePatterns) {
+      const match = xml.match(pattern)
+      if (match) {
+        const url = match[1].trim()
+        if (DEBUG) console.log(`    Found service URL: ${url}`)
+        return url
+      }
+    }
+
+    return null
+  } catch (error) {
+    if (DEBUG) console.log(`    Error fetching ${capabilitiesUrl}: ${error.message}`)
+    return null
+  }
+}
+
+/**
  * Fetch data from registry
  */
 async function fetchFromRegistry(xquery) {
@@ -188,10 +271,10 @@ async function fetchFromRegistry(xquery) {
 async function updateRegistry() {
   const dataDir = join(__dirname, '..', 'src', 'data')
 
+  // Update nodes
   console.log('Fetching nodes from VAMDC registry...')
 
   try {
-    // Fetch nodes
     const nodesXml = await fetchFromRegistry(NODES_XQUERY)
 
     if (DEBUG) {
@@ -199,21 +282,18 @@ async function updateRegistry() {
       writeFileSync(debugPath, nodesXml)
       console.log(`  Debug: Saved raw response to ${debugPath}`)
       console.log(`  Debug: Response length: ${nodesXml.length} chars`)
-      console.log(`  Debug: First 500 chars: ${nodesXml.slice(0, 500)}`)
     }
 
     const nodes = parseNodes(nodesXml)
 
     if (nodes.length === 0) {
       console.warn('Warning: No nodes found in registry response')
-      console.log('Keeping existing nodes.json')
+      console.log('  Keeping existing nodes.json')
     } else {
-      // Sort by name for consistent ordering
       nodes.sort((a, b) => a.name.localeCompare(b.name))
-
       const nodesPath = join(dataDir, 'nodes.json')
       writeFileSync(nodesPath, JSON.stringify(nodes, null, 2) + '\n')
-      console.log(`Updated nodes.json with ${nodes.length} nodes`)
+      console.log(`  Updated nodes.json with ${nodes.length} nodes`)
     }
   } catch (error) {
     console.error('  Error:', error.message)
@@ -221,8 +301,63 @@ async function updateRegistry() {
     console.log('  Keeping existing nodes.json')
   }
 
+  // Update consumers
+  console.log('Fetching consumers from VAMDC registry...')
+
+  try {
+    const consumersXml = await fetchFromRegistry(CONSUMERS_XQUERY)
+
+    if (DEBUG) {
+      const debugPath = join(dataDir, '..', '..', 'debug-consumers-response.xml')
+      writeFileSync(debugPath, consumersXml)
+      console.log(`  Debug: Saved raw response to ${debugPath}`)
+    }
+
+    const rawConsumers = parseConsumers(consumersXml)
+
+    if (rawConsumers.length === 0) {
+      console.warn('Warning: No consumers found in registry response')
+      console.log('  Keeping existing consumers.json')
+    } else {
+      console.log(`  Found ${rawConsumers.length} consumers, fetching service URLs...`)
+
+      // Fetch service URL from capabilities for each consumer
+      const consumers = []
+      for (const consumer of rawConsumers) {
+        console.log(`  Checking ${consumer.name}...`)
+        const serviceUrl = await fetchServiceUrl(consumer.baseUrl)
+
+        if (serviceUrl) {
+          consumers.push({
+            id: consumer.id,
+            name: consumer.name,
+            description: consumer.description,
+            url: serviceUrl,
+            outputType: consumer.outputType,
+            dataTypes: consumer.dataTypes,
+          })
+        } else {
+          console.log(`    Skipping (no service URL found)`)
+        }
+      }
+
+      if (consumers.length > 0) {
+        consumers.sort((a, b) => a.name.localeCompare(b.name))
+        const consumersPath = join(dataDir, 'consumers.json')
+        writeFileSync(consumersPath, JSON.stringify(consumers, null, 2) + '\n')
+        console.log(`  Updated consumers.json with ${consumers.length} consumers`)
+      } else {
+        console.log('  No consumers with valid service URLs found')
+        console.log('  Keeping existing consumers.json')
+      }
+    }
+  } catch (error) {
+    console.error('  Error:', error.message)
+    if (error.cause) console.error('  Cause:', error.cause.message)
+    console.log('  Keeping existing consumers.json')
+  }
+
   console.log('Done!')
-  console.log('Note: consumers.json is manually maintained (not auto-updated)')
 }
 
 // Run if called directly
