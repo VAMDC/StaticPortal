@@ -51,7 +51,7 @@
     "id": "xsams-bibtex",
     "name": "BibTeX from XSAMS",
     "description": "Extract bibliography from XSAMS and render as BibTeX",
-    "url": "http://vamdc.ast.cam.ac.uk/xsams-bibtex",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-bibtex/service",
     "outputType": "text/plain",
     "dataTypes": ["atoms", "molecules", "radiative", "collisions"]
   },
@@ -59,7 +59,7 @@
     "id": "xsams-views",
     "name": "Table Views of XSAMS",
     "description": "General tabular and textual views of XSAMS data",
-    "url": "http://vamdc.ast.cam.ac.uk/xsams-views/",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-views/service",
     "outputType": "text/html",
     "dataTypes": ["atoms", "molecules", "radiative", "collisions"]
   },
@@ -67,7 +67,7 @@
     "id": "xsams2hitran",
     "name": "XSAMS to HITRAN",
     "description": "Convert XSAMS to HITRAN format",
-    "url": "http://xsams-processors.obspm.fr/hitran-processor",
+    "url": "http://xsams-processors.obspm.fr/hitran-processor/service",
     "outputType": "text/plain",
     "dataTypes": ["molecules", "radiative"]
   }
