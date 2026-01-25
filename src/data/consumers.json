@@ -3,7 +3,7 @@
     "id": "atomicxsams2html",
     "name": "Atomic Data to HTML",
     "description": "Render atomic data as an HTML table",
-    "url": "https://xsams-processors.obspm.fr/atomicxsams2html/service",
+    "url": "https://xsamsconsumers.vamdc.eu/atomicxsams2html/service",
     "outputType": "text/html",
     "dataTypes": ["atoms"]
   },
@@ -11,7 +11,7 @@
     "id": "molecularxsams2html",
     "name": "Molecular Data to HTML",
     "description": "Render molecular data as an HTML table",
-    "url": "https://xsams-processors.obspm.fr/molecularxsams2html/service",
+    "url": "https://xsamsconsumers.vamdc.eu/molecularxsams2html/service",
     "outputType": "text/html",
     "dataTypes": ["molecules"]
   },
@@ -19,7 +19,7 @@
     "id": "collisions2html",
     "name": "Collision Data to HTML",
     "description": "Render collision data as an HTML table",
-    "url": "https://xsams-processors.obspm.fr/collisions2html/service",
+    "url": "https://xsamsconsumers.vamdc.eu/collisions2html/service",
     "outputType": "text/html",
     "dataTypes": ["collisions"]
   },
@@ -27,7 +27,7 @@
     "id": "linespec",
     "name": "Line Spectrum Visualization",
     "description": "Generate an SVG visualization of spectral lines",
-    "url": "https://xsams-processors.obspm.fr/linespec/service",
+    "url": "https://xsamsconsumers.vamdc.eu/linespec/service",
     "outputType": "image/svg+xml",
     "dataTypes": ["radiative"]
   },
@@ -35,7 +35,7 @@
     "id": "xsams2sme",
     "name": "Convert to SME Format",
     "description": "Convert XSAMS to SME (Spectroscopy Made Easy) format",
-    "url": "https://xsams-processors.obspm.fr/xsams2sme/service",
+    "url": "https://xsamsconsumers.vamdc.eu/xsams2sme/service",
     "outputType": "text/plain",
     "dataTypes": ["atoms", "radiative"]
   },
@@ -43,7 +43,7 @@
     "id": "specsynth",
     "name": "Spectrum Synthesis (JSON)",
     "description": "Generate synthetic spectra in JSON format",
-    "url": "https://xsams-processors.obspm.fr/specsynth/service",
+    "url": "https://xsamsconsumers.vamdc.eu/specsynth/service",
     "outputType": "application/json",
     "dataTypes": ["radiative"]
   }
