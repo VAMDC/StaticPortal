@@ -242,7 +242,7 @@ StaticPortal/
 
 ## Current Status
 
-**Phases 1-3 Complete** - Full query builder with all form types.
+**All Phases Complete** - Full-featured client-only VAMDC portal.
 
 ### What's Working
 - Vue 3 + Vite + Pinia project structure
@@ -254,8 +254,9 @@ StaticPortal/
 - URL auto-restore on page load
 - Browser back/forward navigation support
 - Node preview via HEAD requests
+- Consumer service integration (XSAMS processors)
 - 58 unit tests passing
-- Production build: ~35KB gzipped
+- Production build: ~36KB gzipped
 
 ### To Run
 ```bash
@@ -287,10 +288,10 @@ npm run build    # Production build to dist/
 2. ✅ `RadiativeForm` with unit conversion
 3. ✅ `useUnits` composable with tests
 
-### Phase 4: Consumer Integration
-1. `ConsumerSelect` component
-2. Form-based POST submission
-3. Open results in new tab
+### Phase 4: Consumer Integration ✅ COMPLETE
+1. ✅ `ConsumerSelect` component
+2. ✅ Form-based POST submission
+3. ✅ Open results in new tab
 
 ## URL State Format
 
