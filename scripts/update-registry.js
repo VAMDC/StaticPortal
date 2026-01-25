@@ -54,17 +54,24 @@ function buildSoapRequest(xquery) {
 }
 
 /**
- * Decode HTML entities in text
+ * Decode HTML entities in text (handles double-encoding)
  */
 function decodeEntities(text) {
   if (!text) return text
-  return text
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&apos;/g, "'")
+  let result = text
+  let prev
+  // Loop until no more entities are decoded (handles double-encoding)
+  do {
+    prev = result
+    result = result
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&apos;/g, "'")
+  } while (result !== prev)
+  return result
 }
 
 /**
