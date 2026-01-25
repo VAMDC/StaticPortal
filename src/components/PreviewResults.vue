@@ -31,11 +31,11 @@ function formatCount(result) {
     </div>
 
     <div class="panel-body">
-      <div v-if="isLoading" class="loading">
+      <div v-if="isLoading && results.length === 0" class="loading">
         Checking nodes...
       </div>
 
-      <div v-else-if="results.length === 0" class="empty">
+      <div v-else-if="!isLoading && results.length === 0" class="empty">
         <p>Click "Preview Availability" to check which databases have matching data.</p>
       </div>
 
