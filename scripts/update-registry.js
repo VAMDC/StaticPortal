@@ -219,23 +219,33 @@ async function fetchServiceUrl(baseUrl) {
 
     if (DEBUG) {
       console.log(`    Capabilities from ${capabilitiesUrl}:`)
-      console.log(`    ${xml.slice(0, 300)}...`)
+      console.log(`    ${xml.slice(0, 500)}...`)
     }
 
-    // Look for service URL in capabilities
-    // Pattern: <accessURL use="full">...</accessURL> or just <accessURL>...</accessURL>
-    const servicePatterns = [
-      /<accessURL[^>]*use=["']full["'][^>]*>([^<]+)<\/accessURL>/i,
-      /<accessURL[^>]*>([^<]+)<\/accessURL>/i,
-    ]
+    // Look for service URL inside <interface xsi:type="vs:ParamHTTP">
+    // Pattern: <interface xsi:type="vs:ParamHTTP">...<accessURL>URL</accessURL>...</interface>
+    const interfacePattern = /<interface[^>]*xsi:type=["']vs:ParamHTTP["'][^>]*>([\s\S]*?)<\/interface>/i
+    const interfaceMatch = xml.match(interfacePattern)
 
-    for (const pattern of servicePatterns) {
-      const match = xml.match(pattern)
-      if (match) {
-        const url = match[1].trim()
+    if (interfaceMatch) {
+      const interfaceXml = interfaceMatch[1]
+      // Extract accessURL from the interface block
+      const urlPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
+      const urlMatch = interfaceXml.match(urlPattern)
+      if (urlMatch) {
+        const url = urlMatch[1].trim()
         if (DEBUG) console.log(`    Found service URL: ${url}`)
         return url
       }
+    }
+
+    // Fallback: try any accessURL if interface pattern didn't match
+    const fallbackPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
+    const fallbackMatch = xml.match(fallbackPattern)
+    if (fallbackMatch) {
+      const url = fallbackMatch[1].trim()
+      if (DEBUG) console.log(`    Found service URL (fallback): ${url}`)
+      return url
     }
 
     return null
