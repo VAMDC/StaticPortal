@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 /**
- * Update nodes.json and consumers.json from the VAMDC registry
+ * Update nodes.json from the VAMDC registry
  *
  * Usage:
  *   node scripts/update-registry.js
  *   npm run update-registry
  *
  * The VAMDC registry uses SOAP/XML. This script sends XQuery requests
- * to fetch the current list of nodes and consumers.
+ * to fetch the current list of nodes.
+ *
+ * Note: consumers.json is manually maintained because registry URLs
+ * don't include the /service path required by the processors.
  */
 
 import { writeFileSync } from 'fs'
@@ -255,38 +258,8 @@ async function updateRegistry() {
     console.log('  Keeping existing nodes.json')
   }
 
-  console.log('Fetching consumers from VAMDC registry...')
-
-  try {
-    // Fetch consumers
-    const consumersXml = await fetchFromRegistry(CONSUMERS_XQUERY)
-
-    if (DEBUG) {
-      const debugPath = join(dataDir, '..', '..', 'debug-consumers-response.xml')
-      writeFileSync(debugPath, consumersXml)
-      console.log(`  Debug: Saved raw response to ${debugPath}`)
-    }
-
-    const consumers = parseConsumers(consumersXml)
-
-    if (consumers.length === 0) {
-      console.warn('Warning: No consumers found in registry response')
-      console.log('Keeping existing consumers.json')
-    } else {
-      // Sort by name
-      consumers.sort((a, b) => a.name.localeCompare(b.name))
-
-      const consumersPath = join(dataDir, 'consumers.json')
-      writeFileSync(consumersPath, JSON.stringify(consumers, null, 2) + '\n')
-      console.log(`Updated consumers.json with ${consumers.length} consumers`)
-    }
-  } catch (error) {
-    console.error('  Error:', error.message)
-    if (error.cause) console.error('  Cause:', error.cause.message)
-    console.log('  Keeping existing consumers.json')
-  }
-
   console.log('Done!')
+  console.log('Note: consumers.json is manually maintained (not auto-updated)')
 }
 
 // Run if called directly
