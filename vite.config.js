@@ -7,7 +7,7 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'robots.txt'],
+      includeAssets: ['favicon.svg', 'robots.txt'],
       manifest: {
         name: 'VAMDC Portal',
         short_name: 'VAMDC',
