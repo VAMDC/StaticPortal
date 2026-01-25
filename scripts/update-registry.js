@@ -204,74 +204,87 @@ function parseConsumers(xml) {
  */
 async function fetchServiceUrl(baseUrl) {
   // Normalize the base URL
-  const capabilitiesUrl = baseUrl.endsWith('/')
+  let capabilitiesUrl = baseUrl.endsWith('/')
     ? `${baseUrl}capabilities`
     : `${baseUrl}/capabilities`
 
-  try {
-    const response = await fetch(capabilitiesUrl, { timeout: 10000 })
-    if (!response.ok) {
-      if (DEBUG) console.log(`    Failed to fetch ${capabilitiesUrl}: ${response.status}`)
-      return null
-    }
+  // Try HTTPS first, then fall back to HTTP
+  const httpsUrl = capabilitiesUrl.replace(/^http:/, 'https:')
+  const urlsToTry = httpsUrl !== capabilitiesUrl ? [httpsUrl, capabilitiesUrl] : [capabilitiesUrl]
 
-    const xml = await response.text()
+  let xml = null
+  let usedHttps = false
 
-    if (DEBUG) {
-      console.log(`    Capabilities from ${capabilitiesUrl}:`)
-      console.log(`    ${xml.slice(0, 500)}...`)
-    }
-
-    // Look for service URL inside <interface xsi:type="vs:ParamHTTP">
-    // Pattern: <interface xsi:type="vs:ParamHTTP">...<accessURL>URL</accessURL>...</interface>
-    const interfacePattern = /<interface[^>]*xsi:type=["']vs:ParamHTTP["'][^>]*>([\s\S]*?)<\/interface>/i
-    const interfaceMatch = xml.match(interfacePattern)
-
-    let serviceUrl = null
-
-    if (interfaceMatch) {
-      const interfaceXml = interfaceMatch[1]
-      // Extract accessURL from the interface block
-      const urlPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
-      const urlMatch = interfaceXml.match(urlPattern)
-      if (urlMatch) {
-        serviceUrl = urlMatch[1].trim()
+  for (const url of urlsToTry) {
+    try {
+      if (DEBUG) console.log(`    Trying ${url}...`)
+      const response = await fetch(url, { timeout: 10000 })
+      if (response.ok) {
+        xml = await response.text()
+        usedHttps = url.startsWith('https:')
+        if (DEBUG) console.log(`    Success with ${url.startsWith('https:') ? 'HTTPS' : 'HTTP'}`)
+        break
       }
+      if (DEBUG) console.log(`    Failed: ${response.status}`)
+    } catch (error) {
+      if (DEBUG) console.log(`    Error: ${error.message}`)
     }
+  }
 
-    // Fallback: try any accessURL if interface pattern didn't match
-    if (!serviceUrl) {
-      const fallbackPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
-      const fallbackMatch = xml.match(fallbackPattern)
-      if (fallbackMatch) {
-        serviceUrl = fallbackMatch[1].trim()
-      }
-    }
-
-    // If we got a localhost URL, construct from base URL instead
-    if (serviceUrl && (serviceUrl.includes('127.0.0.1') || serviceUrl.includes('localhost'))) {
-      if (DEBUG) console.log(`    Got localhost URL: ${serviceUrl}, using base URL instead`)
-      // Extract the path from the localhost URL and apply to base URL
-      try {
-        const localUrl = new URL(serviceUrl)
-        const base = new URL(baseUrl)
-        serviceUrl = `${base.origin}${localUrl.pathname}`
-        if (DEBUG) console.log(`    Constructed URL: ${serviceUrl}`)
-      } catch {
-        // If URL parsing fails, just append /service to base
-        serviceUrl = baseUrl.endsWith('/') ? `${baseUrl}service` : `${baseUrl}/service`
-      }
-    }
-
-    if (serviceUrl) {
-      if (DEBUG) console.log(`    Found service URL: ${serviceUrl}`)
-    }
-
-    return serviceUrl
-  } catch (error) {
-    if (DEBUG) console.log(`    Error fetching ${capabilitiesUrl}: ${error.message}`)
+  if (!xml) {
+    if (DEBUG) console.log(`    Could not fetch capabilities`)
     return null
   }
+
+  if (DEBUG) {
+    console.log(`    Capabilities snippet: ${xml.slice(0, 300)}...`)
+  }
+
+  // Look for service URL inside <interface xsi:type="vs:ParamHTTP">
+  const interfacePattern = /<interface[^>]*xsi:type=["']vs:ParamHTTP["'][^>]*>([\s\S]*?)<\/interface>/i
+  const interfaceMatch = xml.match(interfacePattern)
+
+  let serviceUrl = null
+
+  if (interfaceMatch) {
+    const interfaceXml = interfaceMatch[1]
+    const urlPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
+    const urlMatch = interfaceXml.match(urlPattern)
+    if (urlMatch) {
+      serviceUrl = urlMatch[1].trim()
+    }
+  }
+
+  // Fallback: try any accessURL if interface pattern didn't match
+  if (!serviceUrl) {
+    const fallbackPattern = /<accessURL[^>]*>([^<]+)<\/accessURL>/i
+    const fallbackMatch = xml.match(fallbackPattern)
+    if (fallbackMatch) {
+      serviceUrl = fallbackMatch[1].trim()
+    }
+  }
+
+  if (!serviceUrl) return null
+
+  // If we got a localhost URL, construct from base URL instead
+  if (serviceUrl.includes('127.0.0.1') || serviceUrl.includes('localhost')) {
+    if (DEBUG) console.log(`    Got localhost URL: ${serviceUrl}, using base URL instead`)
+    try {
+      const localUrl = new URL(serviceUrl)
+      const base = new URL(baseUrl)
+      serviceUrl = `${base.origin}${localUrl.pathname}`
+    } catch {
+      serviceUrl = baseUrl.endsWith('/') ? `${baseUrl}service` : `${baseUrl}/service`
+    }
+  }
+
+  // If HTTPS worked for capabilities, try HTTPS for service URL too
+  if (usedHttps && serviceUrl.startsWith('http:')) {
+    serviceUrl = serviceUrl.replace(/^http:/, 'https:')
+  }
+
+  if (DEBUG) console.log(`    Final service URL: ${serviceUrl}`)
+  return serviceUrl
 }
 
 /**

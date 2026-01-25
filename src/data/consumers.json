@@ -3,7 +3,7 @@
     "id": "atomicxsams2html",
     "name": "Atomic spectroscopy XSAMS to HTML",
     "description": "XSAMS processor displaying atomic data in a xsams file as an html array.\nThe generated page provide ",
-    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/atomicxsams2html/service",
+    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/atomicxsams2html/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
@@ -29,7 +29,7 @@
     "id": "collisions2html",
     "name": "Collisional data XSAMS to HTML",
     "description": "The collisions2html converts a XSAMS file containing collisional data into a HTML file.",
-    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/collisions2html/service",
+    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/collisions2html/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
@@ -42,7 +42,7 @@
     "id": "molecularspectroscopyxsams2html",
     "name": "Molecular spectroscopy XSAMS to HTML",
     "description": "XSAMS processor converting a XSAMS file containing molecular spectroscopy data into a HTML file",
-    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/molecularxsams2html/service",
+    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/molecularxsams2html/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
@@ -81,7 +81,7 @@
     "id": "xsams2sme",
     "name": "Xsams2SME",
     "description": "XSAMS processor that converts XML document into the CSV-format wanted by Spectroscopy Made Easy (SME",
-    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/xsams2sme/service",
+    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/xsams2sme/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
