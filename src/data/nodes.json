@@ -86,7 +86,7 @@
   {
     "id": "ivo://vamdc/ghosst",
     "name": "GhoSST",
-    "description": "The GhoSST database (\"Grenoble Astrophysics and Planetology Solid Spectroscopy and Thermodynamics\"",
+    "description": "The GhoSST database (\"Grenoble Astrophysics and \nPlanetology Solid Spectroscopy and Thermodynamics\" ",
     "url": "https://vamdc:vamdcGhosst@ghosst-archive.osug.fr/vamdc/tap/"
   },
   {
