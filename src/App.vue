@@ -2,7 +2,6 @@
 import { computed, onMounted, onUnmounted } from 'vue'
 import { useQueryStore } from './stores/query.js'
 import QueryBuilder from './components/QueryBuilder.vue'
-import NodeList from './components/NodeList.vue'
 import PreviewResults from './components/PreviewResults.vue'
 import XSAMSPreview from './components/XSAMSPreview.vue'
 import ConsumerSelect from './components/ConsumerSelect.vue'
@@ -49,7 +48,6 @@ onUnmounted(() => {
       </div>
 
       <aside class="sidebar">
-        <NodeList />
         <PreviewResults v-if="hasQuery" />
         <XSAMSPreview v-if="hasQuery" />
         <ConsumerSelect v-if="hasQuery" />
