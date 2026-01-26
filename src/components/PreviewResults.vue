@@ -7,6 +7,8 @@ const queryStore = useQueryStore()
 const results = computed(() => queryStore.previewResults)
 const isLoading = computed(() => queryStore.isPreviewLoading)
 const selectedNodeId = computed(() => queryStore.selectedNodeId)
+const totalNodeCount = computed(() => queryStore.totalNodeCount)
+const compatibleNodeCount = computed(() => queryStore.compatibleNodeCount)
 
 // Sort results: available (green) first, then by name
 const sortedResults = computed(() =>
@@ -39,14 +41,30 @@ function selectNode(nodeId) {
     }
   })
 }
+
+function openPreview(nodeId) {
+  queryStore.openPreview(nodeId)
+  // Scroll to preview panel
+  nextTick(() => {
+    const previewPanel = document.querySelector('.xsams-preview')
+    if (previewPanel) {
+      previewPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  })
+}
 </script>
 
 <template>
   <div class="preview-results panel">
     <div class="panel-header">
       <span>Query Results</span>
-      <span v-if="results.length > 0" class="count">
-        {{ availableCount }}/{{ results.length }} nodes
+      <span v-if="results.length > 0 || isLoading" class="count">
+        <template v-if="compatibleNodeCount < totalNodeCount">
+          {{ availableCount }}/{{ compatibleNodeCount }} of {{ totalNodeCount }} nodes
+        </template>
+        <template v-else>
+          {{ availableCount }}/{{ results.length }} nodes
+        </template>
       </span>
     </div>
 
@@ -91,16 +109,15 @@ function selectNode(nodeId) {
             </span>
           </div>
 
-          <a
-            v-if="result.available"
-            :href="result.queryUrl"
-            target="_blank"
-            class="download-link"
-            title="Download XSAMS data"
-            @click.stop
-          >
-            Download
-          </a>
+          <div v-if="result.available" class="result-actions" @click.stop>
+            <button
+              class="preview-btn"
+              title="Preview XSAMS data"
+              @click="openPreview(result.nodeId)"
+            >
+              Preview
+            </button>
+          </div>
         </li>
       </ul>
     </div>
@@ -187,14 +204,24 @@ function selectNode(nodeId) {
   color: var(--color-error);
 }
 
-.download-link {
+.result-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.preview-btn {
   font-size: 0.75rem;
-  color: var(--color-primary);
-  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
   white-space: nowrap;
 }
 
-.download-link:hover {
-  text-decoration: underline;
+.preview-btn:hover {
+  background: var(--color-primary-dark, #0056b3);
 }
 </style>

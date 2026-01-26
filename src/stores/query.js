@@ -1,10 +1,34 @@
 import { defineStore } from 'pinia'
-import { generateQuery, encodeToURL, parseFromURL } from '../composables/useVSS2.js'
+import { generateQuery, encodeToURL, parseFromURL, getRequiredRestrictables } from '../composables/useVSS2.js'
 import { checkAvailabilityStreaming } from '../composables/useNodes.js'
-import nodes from '../data/nodes.json'
+import allNodes from '../data/nodes.json'
+
+// Only use active nodes
+const nodes = allNodes.filter(n => n.active !== false)
+
+/**
+ * Filter nodes by supported restrictables (case-insensitive)
+ */
+function filterNodesByCapabilities(nodeList, requiredRestrictables) {
+  if (requiredRestrictables.size === 0) {
+    return nodeList
+  }
+
+  return nodeList.filter(node => {
+    const nodeRestrictables = (node.restrictables || []).map(r => r.toLowerCase())
+    // Node must support ALL required restrictables
+    for (const required of requiredRestrictables) {
+      if (!nodeRestrictables.includes(required.toLowerCase())) {
+        return false
+      }
+    }
+    return true
+  })
+}
 
 // Store abort controller outside of reactive state
 let previewAbortController = null
+let xsamsAbortController = null
 
 export const useQueryStore = defineStore('query', {
   state: () => ({
@@ -13,6 +37,14 @@ export const useQueryStore = defineStore('query', {
     isPreviewLoading: false,
     pendingNodeCount: 0,
     selectedNodeId: null,
+    totalNodeCount: nodes.length, // Only active nodes
+    compatibleNodeCount: 0,
+    // XSAMS preview state
+    previewNodeId: null,
+    previewData: null,
+    previewLoading: false,
+    previewError: null,
+    previewSize: null,
   }),
 
   getters: {
@@ -64,11 +96,16 @@ export const useQueryStore = defineStore('query', {
       previewAbortController = new AbortController()
       this.isPreviewLoading = true
       this.previewResults = []
-      this.pendingNodeCount = nodes.length
+
+      // Filter nodes by capabilities
+      const requiredRestrictables = getRequiredRestrictables(this.forms)
+      const compatibleNodes = filterNodesByCapabilities(nodes, requiredRestrictables)
+      this.compatibleNodeCount = compatibleNodes.length
+      this.pendingNodeCount = compatibleNodes.length
 
       try {
         await checkAvailabilityStreaming(
-          nodes,
+          compatibleNodes,
           this.vss2Query,
           (result) => {
             // Add result as it arrives
@@ -124,6 +161,103 @@ export const useQueryStore = defineStore('query', {
           this.forms = forms
         }
       }
+    },
+
+    async openPreview(nodeId) {
+      // Cancel any existing preview load
+      if (xsamsAbortController) {
+        xsamsAbortController.abort()
+      }
+
+      this.previewNodeId = nodeId
+      this.previewData = null
+      this.previewError = null
+      this.previewSize = null
+      this.previewLoading = true
+
+      // Find the query URL for this node
+      const result = this.previewResults.find(r => r.nodeId === nodeId)
+      if (!result?.queryUrl) {
+        this.previewError = 'No query URL available'
+        this.previewLoading = false
+        return
+      }
+
+      xsamsAbortController = new AbortController()
+
+      try {
+        // First check size via HEAD request
+        const headResponse = await fetch(result.queryUrl, {
+          method: 'HEAD',
+          signal: xsamsAbortController.signal,
+        })
+
+        const contentLength = headResponse.headers.get('Content-Length')
+        this.previewSize = contentLength ? parseInt(contentLength, 10) : null
+
+        // If size is over 50MB, pause and wait for confirmation
+        const maxSize = 50 * 1024 * 1024
+        if (this.previewSize && this.previewSize > maxSize) {
+          this.previewLoading = false
+          return
+        }
+
+        // Proceed to load data
+        await this.loadPreviewData()
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          this.previewError = error.message || 'Failed to check file size'
+          this.previewLoading = false
+        }
+      }
+    },
+
+    async loadPreviewData() {
+      const result = this.previewResults.find(r => r.nodeId === this.previewNodeId)
+      if (!result?.queryUrl) {
+        this.previewError = 'No query URL available'
+        this.previewLoading = false
+        return
+      }
+
+      this.previewLoading = true
+      this.previewError = null
+
+      if (!xsamsAbortController) {
+        xsamsAbortController = new AbortController()
+      }
+
+      try {
+        const response = await fetch(result.queryUrl, {
+          signal: xsamsAbortController.signal,
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
+
+        const xml = await response.text()
+        this.previewData = xml
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          this.previewError = error.message || 'Failed to load XSAMS data'
+        }
+      } finally {
+        this.previewLoading = false
+        xsamsAbortController = null
+      }
+    },
+
+    closePreview() {
+      if (xsamsAbortController) {
+        xsamsAbortController.abort()
+        xsamsAbortController = null
+      }
+      this.previewNodeId = null
+      this.previewData = null
+      this.previewError = null
+      this.previewSize = null
+      this.previewLoading = false
     },
   },
 })

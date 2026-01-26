@@ -65,7 +65,7 @@ function processData() {
 <template>
   <div class="consumer-select panel">
     <div class="panel-header">
-      <span>Process Data</span>
+      <span>Export Data</span>
     </div>
 
     <div class="panel-body">
@@ -102,7 +102,7 @@ function processData() {
           :disabled="!selectedNode || !selectedConsumer"
           @click="processData"
         >
-          Process Data
+          Export to Processor
         </button>
 
         <!-- Hidden form for POST submission -->
