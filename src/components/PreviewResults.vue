@@ -117,6 +117,14 @@ function openPreview(nodeId) {
             >
               Preview
             </button>
+            <a
+              :href="result.queryUrl"
+              class="download-btn"
+              title="Download XSAMS file"
+              download
+            >
+              Download
+            </a>
           </div>
         </li>
       </ul>
@@ -210,7 +218,8 @@ function openPreview(nodeId) {
   align-items: center;
 }
 
-.preview-btn {
+.preview-btn,
+.download-btn {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   background: var(--color-primary);
@@ -219,9 +228,19 @@ function openPreview(nodeId) {
   border-radius: var(--radius);
   cursor: pointer;
   white-space: nowrap;
+  text-decoration: none;
 }
 
-.preview-btn:hover {
+.preview-btn:hover,
+.download-btn:hover {
   background: var(--color-primary-dark, #0056b3);
+}
+
+.download-btn {
+  background: var(--color-text-light);
+}
+
+.download-btn:hover {
+  background: var(--color-text);
 }
 </style>
