@@ -49,10 +49,52 @@ const tabs = computed(() => {
   return [
     { id: 'atoms', label: 'Atoms', count: data?.atoms?.length || 0 },
     { id: 'molecules', label: 'Molecules', count: data?.molecules?.length || 0 },
+    { id: 'states', label: 'States', count: data?.states?.length || 0 },
     { id: 'transitions', label: 'Transitions', count: data?.transitions?.length || 0 },
     { id: 'collisions', label: 'Collisions', count: data?.collisions?.length || 0 },
   ]
 })
+
+// Determine which energy column to show for transitions
+const transitionEnergyType = computed(() => {
+  const transitions = parsedData.value?.transitions || []
+  if (transitions.length === 0) return 'wavelength'
+
+  // Pick the first type that has values
+  const hasWavelength = transitions.some(t => t.wavelength != null)
+  const hasWavenumber = transitions.some(t => t.wavenumber != null)
+  const hasFrequency = transitions.some(t => t.frequency != null)
+
+  if (hasWavelength) return 'wavelength'
+  if (hasWavenumber) return 'wavenumber'
+  if (hasFrequency) return 'frequency'
+  return 'wavelength'
+})
+
+// Get state info by ref
+function getStateLabel(stateRef) {
+  if (!stateRef || !parsedData.value?.stateMap) return null
+  const state = parsedData.value.stateMap.get(stateRef)
+  if (!state) return null
+  const parts = []
+  if (state.configuration) parts.push(state.configuration)
+  if (state.term) parts.push(state.term)
+  if (state.j) parts.push(`J=${state.j}`)
+  return parts.length > 0 ? parts.join(' ') : stateRef
+}
+
+function scrollToState(stateRef) {
+  activeTab.value = 'states'
+  // Wait for tab switch then scroll
+  setTimeout(() => {
+    const row = document.querySelector(`[data-state-id="${stateRef}"]`)
+    if (row) {
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      row.classList.add('highlight')
+      setTimeout(() => row.classList.remove('highlight'), 1500)
+    }
+  }, 50)
+}
 
 // Current tab data
 const currentData = computed(() => {
@@ -245,29 +287,85 @@ function formatIonCharge(charge) {
           </table>
         </div>
 
+        <!-- States table -->
+        <div v-else-if="activeTab === 'states'" class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Energy</th>
+                <th>Configuration</th>
+                <th>Term</th>
+                <th>J</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(state, i) in displayedData" :key="i" :data-state-id="state.stateId">
+                <td>
+                  <template v-if="state.energy != null">
+                    {{ state.energy.toFixed(4) }} {{ state.energyUnit }}
+                  </template>
+                  <template v-else>-</template>
+                </td>
+                <td>{{ state.configuration || '-' }}</td>
+                <td>{{ state.term || '-' }}</td>
+                <td>{{ state.j || '-' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <!-- Transitions table -->
         <div v-else-if="activeTab === 'transitions'" class="table-container">
           <table>
             <thead>
               <tr>
-                <th>Wavelength</th>
-                <th>Wavenumber</th>
+                <th v-if="transitionEnergyType === 'wavelength'">Wavelength</th>
+                <th v-else-if="transitionEnergyType === 'wavenumber'">Wavenumber</th>
+                <th v-else>Frequency</th>
+                <th>Upper State</th>
+                <th>Lower State</th>
                 <th>A (s<sup>-1</sup>)</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(trans, i) in displayedData" :key="i">
-                <td>
+                <td v-if="transitionEnergyType === 'wavelength'">
                   <template v-if="trans.wavelength">
                     {{ trans.wavelength.toExponential(4) }} {{ trans.wavelengthUnit }}
                   </template>
                   <template v-else>-</template>
                 </td>
-                <td>
+                <td v-else-if="transitionEnergyType === 'wavenumber'">
                   <template v-if="trans.wavenumber">
                     {{ trans.wavenumber.toFixed(4) }} {{ trans.wavenumberUnit }}
                   </template>
                   <template v-else>-</template>
+                </td>
+                <td v-else>
+                  <template v-if="trans.frequency">
+                    {{ trans.frequency.toExponential(4) }} {{ trans.frequencyUnit }}
+                  </template>
+                  <template v-else>-</template>
+                </td>
+                <td>
+                  <a
+                    v-if="trans.upperStateRef && parsedData.stateMap?.has(trans.upperStateRef)"
+                    href="#"
+                    class="state-link"
+                    @click.prevent="scrollToState(trans.upperStateRef)"
+                    :title="trans.upperStateRef"
+                  >{{ getStateLabel(trans.upperStateRef) }}</a>
+                  <span v-else>{{ trans.upperStateRef || '-' }}</span>
+                </td>
+                <td>
+                  <a
+                    v-if="trans.lowerStateRef && parsedData.stateMap?.has(trans.lowerStateRef)"
+                    href="#"
+                    class="state-link"
+                    @click.prevent="scrollToState(trans.lowerStateRef)"
+                    :title="trans.lowerStateRef"
+                  >{{ getStateLabel(trans.lowerStateRef) }}</a>
+                  <span v-else>{{ trans.lowerStateRef || '-' }}</span>
                 </td>
                 <td>
                   <template v-if="trans.probability">
@@ -505,6 +603,26 @@ th {
 
 td.symbol, td.formula {
   font-weight: 500;
+}
+
+.state-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.state-link:hover {
+  text-decoration: underline;
+}
+
+tr.highlight {
+  background: var(--color-primary-light, #e3f2fd);
+  animation: fade-highlight 1.5s ease-out;
+}
+
+@keyframes fade-highlight {
+  from { background: var(--color-primary-light, #e3f2fd); }
+  to { background: transparent; }
 }
 
 .load-more {

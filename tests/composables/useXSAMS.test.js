@@ -218,6 +218,8 @@ describe('useXSAMS', () => {
         wavelengthUnit: 'A',
         wavenumber: 15233.2,
         wavenumberUnit: '1/cm',
+        frequency: null,
+        frequencyUnit: '',
         probability: 4.41e7,
       })
     })
