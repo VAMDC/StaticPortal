@@ -2,14 +2,14 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useQueryStore } from './stores/query.js'
 import QueryBuilder from './components/QueryBuilder.vue'
+import QueryPanel from './components/QueryPanel.vue'
 import PreviewResults from './components/PreviewResults.vue'
 import XSAMSPreview from './components/XSAMSPreview.vue'
 import ConsumerSelect from './components/ConsumerSelect.vue'
 
 const queryStore = useQueryStore()
 
-const vss2Query = computed(() => queryStore.vss2Query)
-const hasQuery = computed(() => queryStore.hasValidQuery)
+const hasQuery = computed(() => queryStore.hasValidQuery || queryStore.customQuery)
 
 // Theme handling: 'light', 'dark', or 'system'
 const theme = ref('system')
@@ -77,14 +77,10 @@ onUnmounted(() => {
     <main class="main">
       <div class="query-section">
         <QueryBuilder />
-
-        <div v-if="hasQuery" class="query-preview">
-          <h3>Generated Query (VSS2)</h3>
-          <code class="query-code">{{ vss2Query }}</code>
-        </div>
       </div>
 
       <aside class="sidebar">
+        <QueryPanel />
         <PreviewResults v-if="hasQuery" />
         <XSAMSPreview v-if="hasQuery" />
         <ConsumerSelect v-if="hasQuery" />

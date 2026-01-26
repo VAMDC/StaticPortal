@@ -14,11 +14,6 @@ function addForm(type) {
 function removeForm(formId) {
   queryStore.removeForm(formId)
 }
-
-function runPreview() {
-  queryStore.runPreview()
-  queryStore.syncToURL()
-}
 </script>
 
 <template>
@@ -79,24 +74,6 @@ function runPreview() {
           />
         </div>
       </div>
-
-      <div v-if="queryStore.forms.length > 0" class="actions">
-        <button
-          v-if="!queryStore.isPreviewLoading"
-          class="primary"
-          :disabled="!queryStore.hasValidQuery"
-          @click="runPreview"
-        >
-          Preview Availability
-        </button>
-        <button
-          v-else
-          class="secondary"
-          @click="queryStore.stopPreview()"
-        >
-          Stop ({{ queryStore.pendingNodeCount }} pending)
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -121,11 +98,5 @@ function runPreview() {
   border-radius: var(--radius);
   padding: 1rem;
   background: var(--color-bg);
-}
-
-.actions {
-  margin-top: 1rem;
-  display: flex;
-  gap: 0.5rem;
 }
 </style>

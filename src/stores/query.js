@@ -33,6 +33,7 @@ let xsamsAbortController = null
 export const useQueryStore = defineStore('query', {
   state: () => ({
     forms: [],
+    customQuery: null, // When set, overrides generated query
     previewResults: [],
     isPreviewLoading: false,
     pendingNodeCount: 0,
@@ -132,6 +133,43 @@ export const useQueryStore = defineStore('query', {
       }
       this.isPreviewLoading = false
       this.pendingNodeCount = 0
+    },
+
+    async runPreviewWithQuery(query) {
+      this.customQuery = query
+
+      // Cancel any existing preview
+      if (previewAbortController) {
+        previewAbortController.abort()
+      }
+
+      previewAbortController = new AbortController()
+      this.isPreviewLoading = true
+      this.previewResults = []
+
+      // When using custom query, query all nodes (can't filter by capabilities)
+      this.compatibleNodeCount = nodes.length
+      this.pendingNodeCount = nodes.length
+
+      try {
+        await checkAvailabilityStreaming(
+          nodes,
+          query,
+          (result) => {
+            this.previewResults.push(result)
+            this.pendingNodeCount--
+          },
+          previewAbortController.signal
+        )
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Preview failed:', error)
+        }
+      } finally {
+        this.isPreviewLoading = false
+        this.pendingNodeCount = 0
+        previewAbortController = null
+      }
     },
 
     selectNode(nodeId) {
