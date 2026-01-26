@@ -1,5 +1,7 @@
 # VAMDC Static Portal
 
+**Live demo: https://vamdc.github.io/StaticPortal/**
+
 A client-only web application for querying atomic and molecular data across the federated VAMDC infrastructure. Runs entirely in the browser with no backend required.
 
 ## What is VAMDC?
@@ -131,7 +133,3 @@ https://portal.example.com/#atoms/Fe/1-3
 Decodes to: Iron (Fe) with ion charge between 1 and 3.
 
 Browser back/forward navigation works as expected.
-
-## License
-
-MIT
