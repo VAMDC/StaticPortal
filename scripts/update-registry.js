@@ -95,6 +95,63 @@ function extractText(xml, tagName) {
 }
 
 /**
+ * Extract all restrictable names from capabilities XML
+ */
+function extractRestrictables(xml) {
+  const restrictables = []
+  // Match <restrictable>name</restrictable> in any namespace
+  const patterns = [
+    /<restrictable[^>]*>([^<]+)<\/restrictable>/gi,
+    /<[^:]+:restrictable[^>]*>([^<]+)<\/[^:]+:restrictable>/gi,
+  ]
+
+  for (const pattern of patterns) {
+    let match
+    while ((match = pattern.exec(xml)) !== null) {
+      const name = match[1].trim()
+      if (name && !restrictables.includes(name)) {
+        restrictables.push(name)
+      }
+    }
+  }
+
+  return restrictables.sort()
+}
+
+/**
+ * Fetch restrictables from a node's capabilities endpoint
+ * Returns { active: boolean, restrictables: string[] }
+ */
+async function fetchNodeCapabilities(baseUrl) {
+  let capabilitiesUrl = baseUrl.endsWith('/')
+    ? `${baseUrl}capabilities`
+    : `${baseUrl}/capabilities`
+
+  // Try HTTPS first
+  const httpsUrl = capabilitiesUrl.replace(/^http:/, 'https:')
+  const urlsToTry = httpsUrl !== capabilitiesUrl ? [httpsUrl, capabilitiesUrl] : [capabilitiesUrl]
+
+  for (const url of urlsToTry) {
+    try {
+      if (DEBUG) console.log(`    Trying ${url}...`)
+      const response = await fetch(url, { signal: AbortSignal.timeout(15000) })
+      if (response.ok) {
+        const xml = await response.text()
+        const restrictables = extractRestrictables(xml)
+        if (DEBUG) console.log(`    Found ${restrictables.length} restrictables`)
+        return { active: true, restrictables }
+      }
+      if (DEBUG) console.log(`    Failed: ${response.status}`)
+    } catch (error) {
+      if (DEBUG) console.log(`    Error: ${error.message}`)
+    }
+  }
+
+  // Node didn't respond - mark as inactive
+  return { active: false, restrictables: [] }
+}
+
+/**
  * Extract accessURL from capability element
  */
 function extractAccessURL(xml, standardID) {
@@ -332,6 +389,26 @@ async function updateRegistry() {
       console.warn('Warning: No nodes found in registry response')
       console.log('  Keeping existing nodes.json')
     } else {
+      console.log(`  Found ${nodes.length} nodes, fetching capabilities...`)
+
+      // Fetch capabilities for each node
+      let activeCount = 0
+      for (const node of nodes) {
+        console.log(`  Checking ${node.name}...`)
+        const caps = await fetchNodeCapabilities(node.url)
+        node.active = caps.active
+        node.restrictables = caps.restrictables
+        if (!caps.active) {
+          console.log(`    Inactive (no response)`)
+        } else if (caps.restrictables.length === 0) {
+          console.log(`    No restrictables found`)
+          activeCount++
+        } else {
+          activeCount++
+        }
+      }
+      console.log(`  ${activeCount} of ${nodes.length} nodes active`)
+
       nodes.sort((a, b) => a.name.localeCompare(b.name))
       const nodesPath = join(dataDir, 'nodes.json')
       writeFileSync(nodesPath, JSON.stringify(nodes, null, 2) + '\n')
@@ -367,20 +444,24 @@ async function updateRegistry() {
       const consumers = []
       for (const consumer of rawConsumers) {
         console.log(`  Checking ${consumer.name}...`)
-        const serviceUrl = await fetchServiceUrl(consumer.baseUrl)
+        let serviceUrl = await fetchServiceUrl(consumer.baseUrl)
 
-        if (serviceUrl) {
-          consumers.push({
-            id: consumer.id,
-            name: consumer.name,
-            description: consumer.description,
-            url: serviceUrl,
-            outputType: consumer.outputType,
-            dataTypes: consumer.dataTypes,
-          })
-        } else {
-          console.log(`    Skipping (no service URL found)`)
+        // Fallback: use baseUrl + /service if capabilities didn't return a URL
+        if (!serviceUrl) {
+          serviceUrl = consumer.baseUrl.endsWith('/')
+            ? `${consumer.baseUrl}service`
+            : `${consumer.baseUrl}/service`
+          console.log(`    Using fallback URL: ${serviceUrl}`)
         }
+
+        consumers.push({
+          id: consumer.id,
+          name: consumer.name,
+          description: consumer.description,
+          url: serviceUrl,
+          outputType: consumer.outputType,
+          dataTypes: consumer.dataTypes,
+        })
       }
 
       if (consumers.length > 0) {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { generateQuery, encodeToURL, parseFromURL, buildQueryURL } from '../../src/composables/useVSS2.js'
+import { generateQuery, encodeToURL, parseFromURL, buildQueryURL, getRequiredRestrictables } from '../../src/composables/useVSS2.js'
 
 describe('useVSS2', () => {
   describe('generateQuery', () => {
@@ -498,6 +498,92 @@ describe('useVSS2', () => {
 
       expect(url).toContain('QUERY=')
       expect(url).toContain(encodeURIComponent(query))
+    })
+  })
+
+  describe('getRequiredRestrictables', () => {
+    it('returns empty set for empty forms', () => {
+      expect(getRequiredRestrictables([])).toEqual(new Set())
+      expect(getRequiredRestrictables(null)).toEqual(new Set())
+    })
+
+    it('extracts restrictables from atoms form', () => {
+      const forms = [{
+        id: 1,
+        type: 'atoms',
+        fields: { symbol: 'Fe', ionChargeMin: 1 }
+      }]
+      const required = getRequiredRestrictables(forms)
+      expect(required.has('AtomSymbol')).toBe(true)
+      expect(required.has('AtomIonCharge')).toBe(true)
+      expect(required.size).toBe(2)
+    })
+
+    it('extracts restrictables from molecules form', () => {
+      const forms = [{
+        id: 1,
+        type: 'molecules',
+        fields: { stoichiometricFormula: 'H2O' }
+      }]
+      const required = getRequiredRestrictables(forms)
+      expect(required.has('MoleculeStoichiometricFormula')).toBe(true)
+      expect(required.size).toBe(1)
+    })
+
+    it('extracts restrictables from radiative form', () => {
+      const forms = [{
+        id: 1,
+        type: 'radiative',
+        fields: { wavelengthMin: 4000, wavelengthMax: 7000 }
+      }]
+      const required = getRequiredRestrictables(forms)
+      expect(required.has('RadTransWavelength')).toBe(true)
+      expect(required.size).toBe(1)
+    })
+
+    it('extracts restrictables from collisions form', () => {
+      const forms = [{
+        id: 1,
+        type: 'collisions',
+        fields: { targetSymbol: 'H', processType: 'ioni' }
+      }]
+      const required = getRequiredRestrictables(forms)
+      expect(required.has('AtomSymbol')).toBe(true)
+      expect(required.has('CollisionCode')).toBe(true)
+      expect(required.size).toBe(2)
+    })
+
+    it('ignores empty field values', () => {
+      const forms = [{
+        id: 1,
+        type: 'atoms',
+        fields: { symbol: 'Fe', ionChargeMin: null, massNumber: '' }
+      }]
+      const required = getRequiredRestrictables(forms)
+      expect(required.size).toBe(1)
+      expect(required.has('AtomSymbol')).toBe(true)
+    })
+
+    it('deduplicates restrictables from min/max fields', () => {
+      const forms = [{
+        id: 1,
+        type: 'atoms',
+        fields: { ionChargeMin: 1, ionChargeMax: 3 }
+      }]
+      const required = getRequiredRestrictables(forms)
+      expect(required.has('AtomIonCharge')).toBe(true)
+      expect(required.size).toBe(1)
+    })
+
+    it('combines restrictables from multiple forms', () => {
+      const forms = [
+        { id: 1, type: 'atoms', fields: { symbol: 'Fe' } },
+        { id: 2, type: 'radiative', fields: { wavelengthMin: 5000 } }
+      ]
+      const required = getRequiredRestrictables(forms)
+      expect(required.has('AtomSymbol')).toBe(true)
+      expect(required.has('RadTransWavelength')).toBe(true)
+      expect(required.size).toBe(2)
     })
   })
 })

@@ -205,3 +205,33 @@ export function buildQueryURL(node, query) {
   const baseUrl = node.url.endsWith('/') ? node.url : `${node.url}/`
   return `${baseUrl}sync?LANG=VSS2&FORMAT=XSAMS&QUERY=${encodeURIComponent(query)}`
 }
+
+/**
+ * Get the set of restrictables required by the current forms
+ *
+ * @param {Array} forms - Array of form objects with type and fields
+ * @returns {Set<string>} Set of restrictable names
+ */
+export function getRequiredRestrictables(forms) {
+  const required = new Set()
+
+  if (!forms || forms.length === 0) {
+    return required
+  }
+
+  for (const form of forms) {
+    const fields = form.fields || {}
+    const mapping = RESTRICTABLES[form.type] || {}
+
+    for (const [fieldName, value] of Object.entries(fields)) {
+      if (value === null || value === undefined || value === '') continue
+
+      const restrictable = mapping[fieldName]
+      if (restrictable) {
+        required.add(restrictable)
+      }
+    }
+  }
+
+  return required
+}

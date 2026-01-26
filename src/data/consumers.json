@@ -3,7 +3,7 @@
     "id": "atomicxsams2html",
     "name": "Atomic spectroscopy XSAMS to HTML",
     "description": "XSAMS processor displaying atomic data in a xsams file as an html array.\nThe generated page provide ",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/atomicxsams2html/service",
+    "url": "http://xsamsconsumers.vamdc.eu/applyXSL/atomicxsams2html/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
@@ -55,7 +55,7 @@
     "id": "xsams-views",
     "name": "Table views of XSAMS",
     "description": "General views of data in XSAMS format. The display is tabular and textual. Initial display is a list",
-    "url": "http://vamdc2.ast.cam.ac.uk:8080/xsams-views/service",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-views/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
@@ -69,6 +69,19 @@
     "name": "XSAMS multiplexor",
     "description": "The multiplexor combines two or more XSAMS documents into one. The output is the union of inputs. No",
     "url": "http://vamdc.ast.cam.ac.uk/xsams-mux/service",
+    "outputType": "text/html",
+    "dataTypes": [
+      "atoms",
+      "molecules",
+      "radiative",
+      "collisions"
+    ]
+  },
+  {
+    "id": "xsams2hitran",
+    "name": "XSAMS to Hitran",
+    "description": "XSAMS processor converting a XSAMS file into a Hitran formatted file",
+    "url": "http://xsams-processors.obspm.fr/hitran-processor/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",

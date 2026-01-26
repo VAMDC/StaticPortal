@@ -3,234 +3,589 @@
     "id": "ivo://vamdc/asd-1000",
     "name": "Acetylene Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "High-temperature linelist for acetylene. This line list is adapted for the temperatures up to 1000 K",
-    "url": "http://lts.iao.ru/node/asd-1000/tap/"
+    "url": "http://lts.iao.ru/node/asd-1000/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/acol",
     "name": "ACol - database for collisional processes",
     "description": "Database for collisional processes of excitation/deexcitation and ionization/recombination in hydrog",
-    "url": "http://servo.aob.rs/acol/tap/"
+    "url": "http://servo.aob.rs/acol/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "CollisionIAEACode",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MoleculeChemicalName"
+    ]
   },
   {
     "id": "ivo://vamdc/ambdas-tap",
     "name": "AMBDAS: Atomic and Molecular Bibliographic Data System",
     "description": "The Atomic and Molecular Bibliographic Data System (AMBDAS) is a bibliographic database of literatur",
-    "url": "http://amdis.iaea.org/db/ambdas/tap/"
+    "url": "http://amdis.iaea.org/db/ambdas/tap/",
+    "active": true,
+    "restrictables": [
+      "atomsymbol",
+      "ioncharge"
+    ]
   },
   {
     "id": "ivo://vamdc/amdis-ionization",
     "name": "AMDIS Ionization",
     "description": "Ionization cross sections and rate coefficients by electron impact.",
-    "url": "http://dbshino.nifs.ac.jp:4000/vamdc/tap/"
+    "url": "http://dbshino.nifs.ac.jp:4000/vamdc/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/basecol2015/vamdc-tap",
     "name": "BASECOL2015: VAMDC-TAP interface",
     "description": "This database, called BASECOL is devoted to collisional ro-vibrational excitation of molecules by co",
-    "url": "http://basecoltap2015.vamdc.org/12_07/TAP/"
+    "url": "http://basecoltap2015.vamdc.org/12_07/TAP/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/emol_radam",
     "name": "Belgrade electron/atom(molecule) database (BEAMDB)",
     "description": "Electron interaction cross-sections for elastic scattering, electron excitation, ionization and tota",
-    "url": "http://servo.aob.rs/emol/tap/"
+    "url": "http://servo.aob.rs/emol/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "CollisionCode",
+      "CollisionIAEACode",
+      "Inchi",
+      "InchiKey",
+      "MoleculeChemicalName",
+      "MoleculeOrdinaryStructuralFormula",
+      "MoleculeStoichiometricFormula",
+      "ParticleName"
+    ]
   },
   {
     "id": "ivo://vamdc/cdsd_node",
     "name": "Carbon Dioxide Spectroscopic Databank (VAMDC-TAP)",
     "description": "The current version of CDSD-296 consists of 7 most abundant in the Earth's atmosphere isotopic speci",
-    "url": "http://lts.iao.ru/node/cdsd/tap/"
+    "url": "http://lts.iao.ru/node/cdsd/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/cdsd_node_xsams0.3",
     "name": "Carbon Dioxide Spectroscopic Databank (VAMDC-TAP)",
     "description": "The current version of CDSD-296 consists of 7 most abundant in the Earth's atmosphere isotopic speci",
-    "url": "http://lts.iao.ru/node/cdsd_xsams0.3/tap/"
+    "url": "http://lts.iao.ru/node/cdsd_xsams0.3/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/cdsd-1000",
     "name": "Carbon Dioxide Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "Carbon Dioxide spectroscopic Data Base for high temperature applications (CDSD-1000) contains spectr",
-    "url": "http://lts.iao.ru/node/cdsd-1000-xsams1/tap/"
+    "url": "http://lts.iao.ru/node/cdsd-1000-xsams1/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "RadTransProbabilityA",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/cdsd-296",
     "name": "Carbon Dioxide Spectroscopic Databank 296K (VAMDC-TAP)",
     "description": "Carbon Dioxide spectroscopic Data Base for atmospheric applications (CDSD-296) contains spectral lin",
-    "url": "http://lts.iao.ru/node/cdsd-296-xsams1/tap/"
+    "url": "http://lts.iao.ru/node/cdsd-296-xsams1/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "RadTransProbabilityA",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/cdsd-4000",
     "name": "Carbon Dioxide Spectroscopic Databank 4000K (VAMDC-TAP)",
     "description": "The high-temperature Carbon Dioxide Spectroscopic Databank (CDSD-4000) contains more than 628 millio",
-    "url": "http://lts.iao.ru/node/cdsd-4000-xsams1/tap/"
+    "url": "http://lts.iao.ru/node/cdsd-4000-xsams1/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber"
+    ]
   },
   {
     "id": "ivo://vamdc/cdms/vamdc-tap_12.07",
     "name": "CDMS",
     "description": "The Cologne Database for Molecular Spectroscopy (CDMS) contains a catalog of radio frequency and mic",
-    "url": "https://cdms.astro.uni-koeln.de/cdms/tap/"
+    "url": "https://cdms.astro.uni-koeln.de/cdms/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "EnvironmentTemperature",
+      "InchiKey",
+      "IonCharge",
+      "MoleculeChemicalName",
+      "MoleculeInchiKey",
+      "MoleculeOrdinaryStructuralFormula",
+      "MoleculeSpeciesID",
+      "MoleculeSpeciesTag",
+      "MoleculeStateEnergy",
+      "MoleculeStateNSIName",
+      "MoleculeStateNuclearSpinIsomer",
+      "MoleculeStoichiometricFormula",
+      "RadTransCode",
+      "RadTransEnergy",
+      "RadTransFrequency",
+      "RadTransProbabilityA",
+      "RadTransProbabilityIdealisedIntensity",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "SpeciesID",
+      "StateEnergy",
+      "VAMDCSpeciesID",
+      "dataset",
+      "geteinsteina",
+      "getonlycalc",
+      "hfsflag"
+    ]
   },
   {
     "id": "ivo://vamdc/chianti/django",
     "name": "Chianti",
     "description": "Chianti consists of a critically evaluated set of up-to-date atomic data, together with user-friendl",
-    "url": "http://vamdc.ast.cam.ac.uk/chianti7/tap/"
+    "url": "http://vamdc.ast.cam.ac.uk/chianti7/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-GeH4-lines",
     "name": "GeCaSDa: Gemane Calculated Spectroscopic Database",
     "description": "Calculated line lists for Germane (GeH4)",
-    "url": "http://vamdc.icb.cnrs.fr/gecasda/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/gecasda/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/ghosst",
     "name": "GhoSST",
     "description": "The GhoSST database (\"Grenoble Astrophysics and \nPlanetology Solid Spectroscopy and Thermodynamics\" ",
-    "url": "https://vamdc:vamdcGhosst@ghosst-archive.osug.fr/vamdc/tap/"
+    "url": "https://vamdc:vamdcGhosst@ghosst-archive.osug.fr/vamdc/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/hitran/vamdc-working",
     "name": "Hitran (VAMDC-TAP)",
     "description": "HITRAN is a molecular spectroscopic database that a variety of computer codes use to predict and sim",
-    "url": "https://hitran.org/tap/"
+    "url": "https://hitran.org/tap/",
+    "active": true,
+    "restrictables": [
+      "inchikey",
+      "moleculechemicalname",
+      "moleculeinchikey",
+      "moleculestoichiometricformula",
+      "radtransprobabilitya",
+      "radtranswavelength",
+      "radtranswavenumber"
+    ]
   },
   {
     "id": "ivo://vamdc/IDEADB",
     "name": "IDEADB - Innsbruck Dissociative Electron Attachment Database",
     "description": "This database contains informations about dissociative electron attachment upon interaction of low e",
-    "url": "https://ideadb.uibk.ac.at/tap/"
+    "url": "https://ideadb.uibk.ac.at/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomSymbol",
+      "CollisionCode",
+      "Inchi",
+      "InchiKey",
+      "MoleculeCASRegistryNumber",
+      "MoleculeChemicalName",
+      "MoleculeMolecularWeight",
+      "MoleculeStoichiometricFormula",
+      "ParticleName",
+      "SourceDOI"
+    ]
   },
   {
     "id": "ivo://vamdc/jpl/vamdc-tap_12.07",
     "name": "JPL database: VAMDC-TAP service",
     "description": "The JPL database contains a catalog of radio frequency and microwave to far-infrared spectral lines ",
-    "url": "https://cdms.astro.uni-koeln.de/jpl/tap/"
+    "url": "https://cdms.astro.uni-koeln.de/jpl/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "EnvironmentTemperature",
+      "InchiKey",
+      "IonCharge",
+      "MoleculeChemicalName",
+      "MoleculeInchiKey",
+      "MoleculeOrdinaryStructuralFormula",
+      "MoleculeSpeciesID",
+      "MoleculeStateEnergy",
+      "MoleculeStateNSIName",
+      "MoleculeStateNuclearSpinIsomer",
+      "MoleculeStoichiometricFormula",
+      "RadTransCode",
+      "RadTransEnergy",
+      "RadTransFrequency",
+      "RadTransProbabilityA",
+      "RadTransProbabilityIdealisedIntensity",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "SpeciesID",
+      "StateEnergy",
+      "VAMDCSpeciesID"
+    ]
   },
   {
     "id": "ivo://vamdc/kida/vamdc-tap_12.07",
     "name": "KIDA: Kinetic Database for Astrochemistry - TAP service",
     "description": "KIDA is a database of kinetic data interesting for astrochemical (interstellar medium and planetary ",
-    "url": "https://vamdc.astrochem-tools.org/tap/"
+    "url": "https://vamdc.astrochem-tools.org/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "FunctionID",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MethodCategory",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "ParticleName",
+      "SourceDOI"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-methane-lines",
     "name": "MeCaSDa - Methane Calculated Spectroscopic Database",
     "description": "Calculated line lists for methane (12CH4, 13CH4 and 12CH3D). The data on methane contain  the vibrat",
-    "url": "http://vamdc.icb.cnrs.fr/mecasda-12.07/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/mecasda-12.07/tap/",
+    "active": true,
+    "restrictables": [
+      "EnvironmentTemperature",
+      "Inchi",
+      "InchiKey",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "RadTransProbabilityA",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/nist/vamdc-tap_12.07",
     "name": "NIST Atomic Spectra Database",
     "description": "This database provides access and search capability for NIST critically evaluated data on atomic ene",
-    "url": "https://physics.nist.gov:8000/nodes/asd/tap/"
+    "url": "https://physics.nist.gov:8000/nodes/asd/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/ndsd-1000",
     "name": "Nitrogen dioxide Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "High temperature linelist for nitrogen dioxide. This line list is adapted for the temperatures up to",
-    "url": "http://lts.iao.ru/node/ndsd-1000/tap/"
+    "url": "http://lts.iao.ru/node/ndsd-1000/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/nosd-1000",
     "name": "Nitrous Oxide Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "High temperature linelist for nitrous oxide (NOSD-1000). The data bank contains line parameters (pos",
-    "url": "http://lts.iao.ru/node/nosd-1000/tap/"
+    "url": "http://lts.iao.ru/node/nosd-1000/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "RadTransProbabilityLineStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/OACatania/LASP",
     "name": "OACT - LASP Database",
     "description": "Laboratorio di Astrofisica Sperimentale (Catania-LASp for short) has been active in Catania starti",
-    "url": "http://dblasp.oact.inaf.it/node1207/OACT/tap/"
+    "url": "http://dblasp.oact.inaf.it/node1207/OACT/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/MolD",
     "name": "Photodissociation - MolD database",
     "description": "Database for photodissociation cross-sections of molecular ions from individual ro-vibrational state",
-    "url": "http://servo.aob.rs/mold/tap/"
+    "url": "http://servo.aob.rs/mold/tap/",
+    "active": true,
+    "restrictables": [
+      "Inchi",
+      "InchiKey",
+      "MoleculeChemicalName",
+      "MoleculeQNJ",
+      "MoleculeQNv",
+      "MoleculeStoichiometricFormula"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-RuO4-lines",
     "name": "RuCaSDa: Ruthenium tetroxide Calculated Spectroscopic Database",
     "description": "Lines of Ruthenium Tetroxide (RuO4)",
-    "url": "http://vamdc.icb.cnrs.fr/rucasda-12.07/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/rucasda-12.07/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-SF6-lines",
     "name": "SHeCaSDa - SF6 Calculated Spectroscopic Database",
     "description": "Calculated line lists for sulfur hexafluoride (32SF6, 33SF6, 34SF6). The data on SF6 contain  the vi",
-    "url": "http://vamdc.icb.cnrs.fr/shecasda-12.07/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/shecasda-12.07/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/spectr-w3",
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
-    "url": "http://spectr-w3.snz.ru/vamdc/tap/"
+    "url": "http://spectr-w3.snz.ru/vamdc/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "RadTransProbabilityA",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
     "name": "SpEctroScopy of Atoms and Molecules",
     "description": "Sesam is a project of the LERMA (Laboratoire d'Etudes du Rayonnement et de la Matiere). Its purpose ",
-    "url": "http://sesam.obspm.fr/12.07/vamdc/tap/"
+    "url": "http://sesam.obspm.fr/12.07/vamdc/tap/",
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "RadTransProbabilityA",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/stark-b/tap-xsams",
     "name": "Stark-b",
     "description": "Database for \"Stark\" broadening of isolated lines of atoms and ions in the impact approximation",
-    "url": "http://stark-b.obspm.fr/12.07/vamdc/tap/"
+    "url": "http://stark-b.obspm.fr/12.07/vamdc/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "EnvironmentTemperature",
+      "EnvironmentTotalNumberDensity",
+      "InchiKey",
+      "IonCharge",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-CF4-lines",
     "name": "TFMeCaSDa - CF4 Calculated Spectroscopic Database",
     "description": "Calculated line lists for carbon tetrafluoride (12CF4). The data on CF4 contain  the vibration-rotat",
-    "url": "http://vamdc.icb.cnrs.fr/tfmecasda/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/tfmecasda/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-SiF4-lines",
     "name": "TFSiCaSDa : Tetra-Fluoro Silane Calculated Spectroscopic Database",
     "description": "TFSiCaSDa : Tetra-Fluoro Silane Calculated Spectroscopic Database",
-    "url": "http://vamdc.icb.cnrs.fr/tfsicasda-12.07/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/tfsicasda-12.07/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/OA-Cagliari/PAH",
     "name": "Theoretical spectral database of  polycyclic aromatic hydrocarbons",
     "description": "The Cagliari/Toulouse PAH database is a collection of theoretical spectroscopic data about Polycycli",
-    "url": "http://vamdc-pah.oa-cagliari.inaf.it/tap/"
+    "url": "http://vamdc-pah.oa-cagliari.inaf.it/tap/",
+    "active": true,
+    "restrictables": [
+      "AsOfDate",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MoleculeChemicalName",
+      "MoleculeNormalModeHarmonicFrequency",
+      "MoleculeNormalModeIntensity",
+      "MoleculeStateEnergy",
+      "MoleculeStateID",
+      "MoleculeStoichiometricFormula"
+    ]
   },
   {
     "id": "ivo://vamdc/TIPbase/tap-xsams",
     "name": "TIPbase : VAMDC-TAP interface",
     "description": "TIPbase lists fine-structure levels, A-values, collision strengths and effective collision strengths",
-    "url": "http://tipbase.obspm.fr/12.07/vamdc/tap/"
+    "url": "http://tipbase.obspm.fr/12.07/vamdc/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "IonCharge",
+      "ParticleName"
+    ]
   },
   {
     "id": "ivo://vamdc/TOPbase/tap-xsams",
     "name": "TOPbase : VAMDC-TAP interface",
     "description": "TOPbase lists LS-coupling energy levels, gf-values and photoionization cross sections for astrophysi",
-    "url": "http://topbase.obspm.fr/12.07/vamdc/tap/"
+    "url": "http://topbase.obspm.fr/12.07/vamdc/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "InchiKey",
+      "IonCharge",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-UF6-lines",
     "name": "UHeCaSDa : Uranium Hexafluoride Calculated Spectroscopic Database",
     "description": "UHeCaSDa : Uranium Hexafluoride Calculated Spectroscopic Database",
-    "url": "http://vamdc.icb.cnrs.fr/uhecasda-12.07/tap/"
+    "url": "http://vamdc.icb.cnrs.fr/uhecasda-12.07/tap/",
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/vald/uu/all",
     "name": "VALD atoms & molecules, observed & predicted lines",
     "description": "The Vienna Atomic Line Database (VALD) is a collection of line parameters (wavelengths, transition e",
-    "url": "https://vald.astro.uu.se/vamdc-all/tap/"
+    "url": "https://vald.astro.uu.se/vamdc-all/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomNuclearCharge",
+      "AtomStateLandeFactor",
+      "AtomStateParity",
+      "AtomStateTotalAngMom",
+      "AtomSymbol",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MethodCategory",
+      "MoleculeChemicalName",
+      "MoleculeQNJ",
+      "MoleculeQNLambda",
+      "MoleculeQNv",
+      "MoleculeStoichiometricFormula",
+      "RadTransBroadeningNatural",
+      "RadTransBroadeningPressure",
+      "RadTransBroadeningPressureCharged",
+      "RadTransBroadeningPressureNeutral",
+      "RadTransEnergy",
+      "RadTransFrequency",
+      "RadTransProbabilityA",
+      "RadTransProbabilityLog10WeightedOscillatorStrength",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransProbabilityWeightedOscillatorStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "SpeciesID",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/vald/uu/obs",
     "name": "VALD atoms & molecules, observed lines only",
     "description": "The Vienna Atomic Line Database (VALD) is a collection of line parameters (wavelengths, transition e",
-    "url": "https://vald.astro.uu.se/vamdc-obs/tap/"
+    "url": "https://vald.astro.uu.se/vamdc-obs/tap/",
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomNuclearCharge",
+      "AtomStateLandeFactor",
+      "AtomStateParity",
+      "AtomStateTotalAngMom",
+      "AtomSymbol",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MethodCategory",
+      "MoleculeChemicalName",
+      "MoleculeQNJ",
+      "MoleculeQNLambda",
+      "MoleculeQNv",
+      "MoleculeStoichiometricFormula",
+      "RadTransBroadeningNatural",
+      "RadTransBroadeningPressure",
+      "RadTransBroadeningPressureCharged",
+      "RadTransBroadeningPressureNeutral",
+      "RadTransEnergy",
+      "RadTransFrequency",
+      "RadTransProbabilityA",
+      "RadTransProbabilityLog10WeightedOscillatorStrength",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransProbabilityWeightedOscillatorStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "SpeciesID",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/wadis/vamdc-tap",
     "name": "Water internet Accessible Distributed Information System",
     "description": "Database containing information on water spectras, notably data on H216O, HDO, D2O, H217O and H218O.",
-    "url": "http://vamdc.saga.iao.ru/node/wadis/tap/"
+    "url": "http://vamdc.saga.iao.ru/node/wadis/tap/",
+    "active": true,
+    "restrictables": [
+      "Inchi",
+      "InchiKey",
+      "MethodCategory",
+      "RadTransProbabilityA",
+      "RadTransProbabilityIdealisedIntensity",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   }
 ]
