@@ -55,7 +55,7 @@
     "id": "xsams-views",
     "name": "Table views of XSAMS",
     "description": "General views of data in XSAMS format. The display is tabular and textual. Initial display is a list",
-    "url": "http://vamdc2.ast.cam.ac.uk:8080/xsams-views/service",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-views/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
