@@ -259,8 +259,19 @@
     "name": "KIDA: Kinetic Database for Astrochemistry - TAP service",
     "description": "KIDA is a database of kinetic data interesting for astrochemical (interstellar medium and planetary ",
     "url": "https://vamdc.astrochem-tools.org/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "FunctionID",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MethodCategory",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "ParticleName",
+      "SourceDOI"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-methane-lines",
@@ -383,17 +394,8 @@
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
     "url": "http://spectr-w3.snz.ru/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomNuclearCharge",
-      "AtomSymbol",
-      "Inchi",
-      "InchiKey",
-      "IonCharge",
-      "RadTransProbabilityA",
-      "RadTransProbabilityOscillatorStrength",
-      "RadTransWavelength"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
@@ -470,19 +472,8 @@
     "name": "Theoretical spectral database of  polycyclic aromatic hydrocarbons",
     "description": "The Cagliari/Toulouse PAH database is a collection of theoretical spectroscopic data about Polycycli",
     "url": "http://vamdc-pah.oa-cagliari.inaf.it/tap/",
-    "active": true,
-    "restrictables": [
-      "AsOfDate",
-      "Inchi",
-      "InchiKey",
-      "IonCharge",
-      "MoleculeChemicalName",
-      "MoleculeNormalModeHarmonicFrequency",
-      "MoleculeNormalModeIntensity",
-      "MoleculeStateEnergy",
-      "MoleculeStateID",
-      "MoleculeStoichiometricFormula"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/TIPbase/tap-xsams",
