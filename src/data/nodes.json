@@ -4,14 +4,8 @@
     "name": "Acetylene Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "High-temperature linelist for acetylene. This line list is adapted for the temperatures up to 1000 K",
     "url": "http://lts.iao.ru/node/asd-1000/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/acol",
@@ -91,43 +85,24 @@
     "name": "Carbon Dioxide Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "Carbon Dioxide spectroscopic Data Base for high temperature applications (CDSD-1000) contains spectr",
     "url": "http://lts.iao.ru/node/cdsd-1000-xsams1/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/cdsd-296",
     "name": "Carbon Dioxide Spectroscopic Databank 296K (VAMDC-TAP)",
     "description": "Carbon Dioxide spectroscopic Data Base for atmospheric applications (CDSD-296) contains spectral lin",
     "url": "http://lts.iao.ru/node/cdsd-296-xsams1/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/cdsd-4000",
     "name": "Carbon Dioxide Spectroscopic Databank 4000K (VAMDC-TAP)",
     "description": "The high-temperature Carbon Dioxide Spectroscopic Databank (CDSD-4000) contains more than 628 millio",
     "url": "http://lts.iao.ru/node/cdsd-4000-xsams1/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/cdms/vamdc-tap_12.07",
@@ -146,7 +121,6 @@
       "MoleculeInchiKey",
       "MoleculeOrdinaryStructuralFormula",
       "MoleculeSpeciesID",
-      "MoleculeSpeciesTag",
       "MoleculeStateEnergy",
       "MoleculeStateNSIName",
       "MoleculeStateNuclearSpinIsomer",
@@ -160,11 +134,7 @@
       "RadTransWavenumber",
       "SpeciesID",
       "StateEnergy",
-      "VAMDCSpeciesID",
-      "dataset",
-      "geteinsteina",
-      "getonlycalc",
-      "hfsflag"
+      "VAMDCSpeciesID"
     ]
   },
   {
@@ -305,28 +275,16 @@
     "name": "Nitrogen dioxide Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "High temperature linelist for nitrogen dioxide. This line list is adapted for the temperatures up to",
     "url": "http://lts.iao.ru/node/ndsd-1000/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/nosd-1000",
     "name": "Nitrous Oxide Spectroscopic Databank 1000K (VAMDC-TAP)",
     "description": "High temperature linelist for nitrous oxide (NOSD-1000). The data bank contains line parameters (pos",
     "url": "http://lts.iao.ru/node/nosd-1000/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/OACatania/LASP",
@@ -394,17 +352,8 @@
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
     "url": "http://spectr-w3.snz.ru/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomNuclearCharge",
-      "AtomSymbol",
-      "Inchi",
-      "InchiKey",
-      "IonCharge",
-      "RadTransProbabilityA",
-      "RadTransProbabilityOscillatorStrength",
-      "RadTransWavelength"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
