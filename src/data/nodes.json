@@ -121,6 +121,7 @@
       "MoleculeInchiKey",
       "MoleculeOrdinaryStructuralFormula",
       "MoleculeSpeciesID",
+      "MoleculeSpeciesTag",
       "MoleculeStateEnergy",
       "MoleculeStateNSIName",
       "MoleculeStateNuclearSpinIsomer",
@@ -134,7 +135,11 @@
       "RadTransWavenumber",
       "SpeciesID",
       "StateEnergy",
-      "VAMDCSpeciesID"
+      "VAMDCSpeciesID",
+      "dataset",
+      "geteinsteina",
+      "getonlycalc",
+      "hfsflag"
     ]
   },
   {
@@ -240,8 +245,19 @@
     "name": "KIDA: Kinetic Database for Astrochemistry - TAP service",
     "description": "KIDA is a database of kinetic data interesting for astrochemical (interstellar medium and planetary ",
     "url": "https://vamdc.astrochem-tools.org/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "FunctionID",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MethodCategory",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "ParticleName",
+      "SourceDOI"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-methane-lines",
@@ -352,8 +368,17 @@
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
     "url": "http://spectr-w3.snz.ru/vamdc/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "RadTransProbabilityA",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
