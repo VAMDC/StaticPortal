@@ -146,6 +146,7 @@
       "MoleculeInchiKey",
       "MoleculeOrdinaryStructuralFormula",
       "MoleculeSpeciesID",
+      "MoleculeSpeciesTag",
       "MoleculeStateEnergy",
       "MoleculeStateNSIName",
       "MoleculeStateNuclearSpinIsomer",
@@ -159,7 +160,11 @@
       "RadTransWavenumber",
       "SpeciesID",
       "StateEnergy",
-      "VAMDCSpeciesID"
+      "VAMDCSpeciesID",
+      "dataset",
+      "geteinsteina",
+      "getonlycalc",
+      "hfsflag"
     ]
   },
   {
@@ -406,32 +411,16 @@
     "name": "SpEctroScopy of Atoms and Molecules",
     "description": "Sesam is a project of the LERMA (Laboratoire d'Etudes du Rayonnement et de la Matiere). Its purpose ",
     "url": "http://sesam.obspm.fr/12.07/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityOscillatorStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/stark-b/tap-xsams",
     "name": "Stark-b",
     "description": "Database for \"Stark\" broadening of isolated lines of atoms and ions in the impact approximation",
     "url": "http://stark-b.obspm.fr/12.07/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomSymbol",
-      "EnvironmentTemperature",
-      "EnvironmentTotalNumberDensity",
-      "InchiKey",
-      "IonCharge",
-      "RadTransWavelength"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-CF4-lines",
@@ -495,27 +484,16 @@
     "name": "TIPbase : VAMDC-TAP interface",
     "description": "TIPbase lists fine-structure levels, A-values, collision strengths and effective collision strengths",
     "url": "http://tipbase.obspm.fr/12.07/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomNuclearCharge",
-      "AtomSymbol",
-      "IonCharge",
-      "ParticleName"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/TOPbase/tap-xsams",
     "name": "TOPbase : VAMDC-TAP interface",
     "description": "TOPbase lists LS-coupling energy levels, gf-values and photoionization cross sections for astrophysi",
     "url": "http://topbase.obspm.fr/12.07/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomNuclearCharge",
-      "AtomSymbol",
-      "InchiKey",
-      "IonCharge",
-      "RadTransWavelength"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-UF6-lines",

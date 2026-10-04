@@ -13,10 +13,10 @@
     ]
   },
   {
-    "id": "XSAMS-bibtex",
-    "name": "BibTeX from XSAMS",
-    "description": "A web-application to extract a bibliography from an XSAMS document and to render it in BibTeX.",
-    "url": "http://vamdc.ast.cam.ac.uk/xsams-bibtex/service",
+    "id": "collisions2html",
+    "name": "Basecol data XSAMS to HTML",
+    "description": "The collisions2html converts a XSAMS file containing Basecol collisional data into a HTML file.",
+    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/collisions2html/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
@@ -26,10 +26,10 @@
     ]
   },
   {
-    "id": "collisions2html",
-    "name": "Collisional data XSAMS to HTML",
-    "description": "The collisions2html converts a XSAMS file containing collisional data into a HTML file.",
-    "url": "https://xsamsconsumers.vamdc.eu/applyXSL/collisions2html/service",
+    "id": "XSAMS-bibtex",
+    "name": "BibTeX from XSAMS",
+    "description": "A web-application to extract a bibliography from an XSAMS document and to render it in BibTeX.",
+    "url": "http://vamdc.ast.cam.ac.uk/xsams-bibtex/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",
