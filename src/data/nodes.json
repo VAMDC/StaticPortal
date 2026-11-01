@@ -134,8 +134,38 @@
     "name": "CDMS",
     "description": "The Cologne Database for Molecular Spectroscopy (CDMS) contains a catalog of radio frequency and mic",
     "url": "https://cdms.astro.uni-koeln.de/cdms/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "EnvironmentTemperature",
+      "InchiKey",
+      "IonCharge",
+      "MoleculeChemicalName",
+      "MoleculeInchiKey",
+      "MoleculeOrdinaryStructuralFormula",
+      "MoleculeSpeciesID",
+      "MoleculeSpeciesTag",
+      "MoleculeStateEnergy",
+      "MoleculeStateNSIName",
+      "MoleculeStateNuclearSpinIsomer",
+      "MoleculeStoichiometricFormula",
+      "RadTransCode",
+      "RadTransEnergy",
+      "RadTransFrequency",
+      "RadTransProbabilityA",
+      "RadTransProbabilityIdealisedIntensity",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "SpeciesID",
+      "StateEnergy",
+      "VAMDCSpeciesID",
+      "dataset",
+      "geteinsteina",
+      "getonlycalc",
+      "hfsflag"
+    ]
   },
   {
     "id": "ivo://vamdc/chianti/django",
@@ -207,16 +237,52 @@
     "name": "JPL database: VAMDC-TAP service",
     "description": "The JPL database contains a catalog of radio frequency and microwave to far-infrared spectral lines ",
     "url": "https://cdms.astro.uni-koeln.de/jpl/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomMassNumber",
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "EnvironmentTemperature",
+      "InchiKey",
+      "IonCharge",
+      "MoleculeChemicalName",
+      "MoleculeInchiKey",
+      "MoleculeOrdinaryStructuralFormula",
+      "MoleculeSpeciesID",
+      "MoleculeStateEnergy",
+      "MoleculeStateNSIName",
+      "MoleculeStateNuclearSpinIsomer",
+      "MoleculeStoichiometricFormula",
+      "RadTransCode",
+      "RadTransEnergy",
+      "RadTransFrequency",
+      "RadTransProbabilityA",
+      "RadTransProbabilityIdealisedIntensity",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "SpeciesID",
+      "StateEnergy",
+      "VAMDCSpeciesID"
+    ]
   },
   {
     "id": "ivo://vamdc/kida/vamdc-tap_12.07",
     "name": "KIDA: Kinetic Database for Astrochemistry - TAP service",
     "description": "KIDA is a database of kinetic data interesting for astrochemical (interstellar medium and planetary ",
     "url": "https://vamdc.astrochem-tools.org/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "FunctionID",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "MethodCategory",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "ParticleName",
+      "SourceDOI"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-methane-lines",
@@ -339,17 +405,8 @@
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
     "url": "http://spectr-w3.snz.ru/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomNuclearCharge",
-      "AtomSymbol",
-      "Inchi",
-      "InchiKey",
-      "IonCharge",
-      "RadTransProbabilityA",
-      "RadTransProbabilityOscillatorStrength",
-      "RadTransWavelength"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
