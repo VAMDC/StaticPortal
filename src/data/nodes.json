@@ -186,19 +186,8 @@
     "name": "GeCaSDa: Gemane Calculated Spectroscopic Database",
     "description": "Calculated line lists for Germane (GeH4)",
     "url": "https://vamdc.icb.cnrs.fr/gecasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/ghosst",
@@ -289,19 +278,8 @@
     "name": "MeCaSDa - Methane Calculated Spectroscopic Database",
     "description": "Calculated line lists for methane (12CH4, 13CH4 and 12CH3D). The data on methane contain  the vibrat",
     "url": "https://vamdc.icb.cnrs.fr/mecasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/nist/vamdc-tap_12.07",
@@ -367,100 +345,81 @@
     "name": "RuCaSDa: Ruthenium tetroxide Calculated Spectroscopic Database",
     "description": "Lines of Ruthenium Tetroxide (RuO4)",
     "url": "https://vamdc.icb.cnrs.fr/rucasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-SF6-lines",
     "name": "SHeCaSDa - SF6 Calculated Spectroscopic Database",
     "description": "Calculated line lists for sulfur hexafluoride (32SF6, 33SF6, 34SF6). The data on SF6 contain  the vi",
     "url": "https://vamdc.icb.cnrs.fr/shecasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/spectr-w3",
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
     "url": "http://spectr-w3.snz.ru/vamdc/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "Inchi",
+      "InchiKey",
+      "IonCharge",
+      "RadTransProbabilityA",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
     "name": "SpEctroScopy of Atoms and Molecules",
     "description": "Sesam is a project of the LERMA (Laboratoire d'Etudes du Rayonnement et de la Matiere). Its purpose ",
     "url": "http://sesam.obspm.fr/12.07/vamdc/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "InchiKey",
+      "MoleculeChemicalName",
+      "MoleculeStoichiometricFormula",
+      "RadTransProbabilityA",
+      "RadTransProbabilityOscillatorStrength",
+      "RadTransWavelength",
+      "RadTransWavenumber",
+      "StateEnergy"
+    ]
   },
   {
     "id": "ivo://vamdc/stark-b/tap-xsams",
     "name": "Stark-b",
     "description": "Database for \"Stark\" broadening of isolated lines of atoms and ions in the impact approximation",
     "url": "http://stark-b.obspm.fr/12.07/vamdc/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomSymbol",
+      "EnvironmentTemperature",
+      "EnvironmentTotalNumberDensity",
+      "InchiKey",
+      "IonCharge",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-CF4-lines",
     "name": "TFMeCaSDa - CF4 Calculated Spectroscopic Database",
     "description": "Calculated line lists for carbon tetrafluoride (12CF4). The data on CF4 contain  the vibration-rotat",
     "url": "https://vamdc.icb.cnrs.fr/tfmecasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/dijon-SiF4-lines",
     "name": "TFSiCaSDa : Tetra-Fluoro Silane Calculated Spectroscopic Database",
     "description": "TFSiCaSDa : Tetra-Fluoro Silane Calculated Spectroscopic Database",
     "url": "https://vamdc.icb.cnrs.fr/tfsicasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/OA-Cagliari/PAH",
@@ -486,35 +445,35 @@
     "name": "TIPbase : VAMDC-TAP interface",
     "description": "TIPbase lists fine-structure levels, A-values, collision strengths and effective collision strengths",
     "url": "http://tipbase.obspm.fr/12.07/vamdc/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "IonCharge",
+      "ParticleName"
+    ]
   },
   {
     "id": "ivo://vamdc/TOPbase/tap-xsams",
     "name": "TOPbase : VAMDC-TAP interface",
     "description": "TOPbase lists LS-coupling energy levels, gf-values and photoionization cross sections for astrophysi",
     "url": "http://topbase.obspm.fr/12.07/vamdc/tap/",
-    "active": false,
-    "restrictables": []
+    "active": true,
+    "restrictables": [
+      "AtomNuclearCharge",
+      "AtomSymbol",
+      "InchiKey",
+      "IonCharge",
+      "RadTransWavelength"
+    ]
   },
   {
     "id": "ivo://vamdc/dijon-UF6-lines",
     "name": "UHeCaSDa : Uranium Hexafluoride Calculated Spectroscopic Database",
     "description": "UHeCaSDa : Uranium Hexafluoride Calculated Spectroscopic Database",
     "url": "https://vamdc.icb.cnrs.fr/uhecasda-12.07/tap/",
-    "active": true,
-    "restrictables": [
-      "EnvironmentTemperature",
-      "Inchi",
-      "InchiKey",
-      "MoleculeChemicalName",
-      "MoleculeStoichiometricFormula",
-      "RadTransProbabilityA",
-      "RadTransProbabilityLineStrength",
-      "RadTransWavelength",
-      "RadTransWavenumber",
-      "StateEnergy"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/vald/uu/all",
