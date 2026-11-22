@@ -81,7 +81,7 @@
     "id": "xsams2hitran",
     "name": "XSAMS to Hitran",
     "description": "XSAMS processor converting a XSAMS file into a Hitran formatted file",
-    "url": "http://xsamsconsumers.vamdc.eu/hitran-processor/service",
+    "url": "http://xsams-processors.obspm.fr/hitran-processor/service",
     "outputType": "text/html",
     "dataTypes": [
       "atoms",

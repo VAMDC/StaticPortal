@@ -146,6 +146,7 @@
       "MoleculeInchiKey",
       "MoleculeOrdinaryStructuralFormula",
       "MoleculeSpeciesID",
+      "MoleculeSpeciesTag",
       "MoleculeStateEnergy",
       "MoleculeStateNSIName",
       "MoleculeStateNuclearSpinIsomer",
@@ -159,7 +160,11 @@
       "RadTransWavenumber",
       "SpeciesID",
       "StateEnergy",
-      "VAMDCSpeciesID"
+      "VAMDCSpeciesID",
+      "dataset",
+      "geteinsteina",
+      "getonlycalc",
+      "hfsflag"
     ]
   },
   {
@@ -389,17 +394,8 @@
     "name": "Spectr-W3",
     "description": "The information accumulated in the SPECTR-W3 ADB contains over 450,000 records and includes factual ",
     "url": "http://spectr-w3.snz.ru/vamdc/tap/",
-    "active": true,
-    "restrictables": [
-      "AtomNuclearCharge",
-      "AtomSymbol",
-      "Inchi",
-      "InchiKey",
-      "IonCharge",
-      "RadTransProbabilityA",
-      "RadTransProbabilityOscillatorStrength",
-      "RadTransWavelength"
-    ]
+    "active": false,
+    "restrictables": []
   },
   {
     "id": "ivo://vamdc/sesam/tap-xsams",
